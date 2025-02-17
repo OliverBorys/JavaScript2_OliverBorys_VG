@@ -4,7 +4,7 @@ const ProductCard = ({ product }) => {
   return (
     <a
       href={`/products/${product.id}`}
-      className="max-w-[400px] w-full p-4 flex flex-col items-center justify-between bg-white rounded-lg shadow-lg hover:shadow-xl transition-all cursor-pointer"
+      className="max-w-[300px] w-full p-4 flex flex-col items-center justify-between bg-white rounded-lg shadow-lg hover:shadow-xl transition-all cursor-pointer"
     >
       <div className="relative group">
         <img

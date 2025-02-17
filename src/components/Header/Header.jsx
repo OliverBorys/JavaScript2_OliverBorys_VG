@@ -121,7 +121,7 @@ const Header = () => {
             <img
               src={isHeaderWhite ? logoBlack : logoWhite}
               alt="Logo"
-              className="h-8"
+              className="h-10"
             />
           </Link>
         </div>
