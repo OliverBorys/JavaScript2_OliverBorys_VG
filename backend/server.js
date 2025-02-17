@@ -6,7 +6,6 @@ import cors from "cors";
 const app = express();
 const PORT = 5000;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
@@ -133,6 +132,37 @@ app.get("/api/categories", (req, res) => {
   res.json(categories);
 });
 
+
+const heroDb = new Database("./db/hero.db", { verbose: console.log });
+
+heroDb.prepare(`
+  CREATE TABLE IF NOT EXISTS hero_images (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      image_url TEXT NOT NULL
+  )
+`).run();
+
+app.get("/api/hero-images", (req, res) => {
+  const images = heroDb.prepare("SELECT * FROM hero_images").all();
+  res.json(images);
+});
+
+app.post("/api/update-hero-images", (req, res) => {
+  const { imageUrl1, imageUrl2 } = req.body;
+
+  if (!imageUrl1 || !imageUrl2) {
+    return res.status(400).json({ error: "Both image URLs are required." });
+  }
+
+  const stmt1 = heroDb.prepare("UPDATE hero_images SET image_url = ? WHERE id = 1");
+  const stmt2 = heroDb.prepare("UPDATE hero_images SET image_url = ? WHERE id = 2");
+  
+  stmt1.run(imageUrl1);
+  stmt2.run(imageUrl2);
+  
+
+  res.json({ message: "Hero images updated successfully!" });
+});
 
 
   
