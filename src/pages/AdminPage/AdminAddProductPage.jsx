@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FormInput from "../../components/Admin/AddProduct/FormInput";
 import FormTextarea from "../../components/Admin/AddProduct/FormTextarea";
 import FormSelect from "../../components/Admin/AddProduct/FormSelect";
@@ -45,7 +45,9 @@ const AdminAddProductPage = () => {
     );
   };
 
-
+  useEffect(() => {
+    document.title = "Add product";
+  }, []);
 
   return (
     <section>

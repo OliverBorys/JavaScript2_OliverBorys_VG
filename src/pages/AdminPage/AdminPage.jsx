@@ -6,7 +6,7 @@ import AdminUserSection from "../../components/Admin/AdminPage/AdminUserSection.
 
 const AdminPage = () => {
   useEffect(() => {
-    document.title = "Admin Panel";
+    document.title = "Administration";
   }, []);
 
   return (

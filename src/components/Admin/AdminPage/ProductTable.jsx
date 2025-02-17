@@ -99,7 +99,7 @@ const ProductTable = () => {
               <td className="border border-black">
                 <div className="flex flex-col p-2 sm:px-2 space-y-2">
                   <a
-                    href={`/admin-edit/${product.id}`}
+                    href={`/admin/edit-product`}
                     className="px-2 py-1 border border-blue-500 bg-white text-blue-500 hover:bg-blue-500 hover:text-white transition-all text-center rounded"
                   >
                     Edit
