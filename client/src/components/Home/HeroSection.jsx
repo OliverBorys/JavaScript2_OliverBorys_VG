@@ -30,7 +30,7 @@ const HeroSection = () => {
         />
         <Link
           to="/shop"
-          className="absolute left-1/2 top-2/3 transform -translate-x-1/2 -translate-y-1/2 px-6 py-3 font-medium text-black bg-gray-100 hover:bg-black hover:text-white hover:border-1 hover:border-white transition-all text-center rounded-lg w-40"
+          className="absolute left-1/2 top-2/3 transform -translate-x-1/2 -translate-y-1/2 px-6 py-3 font-medium text-black bg-gray-100 hover:bg-black hover:text-white transition-all text-center rounded-lg w-40"
         >
           Shop
         </Link>
