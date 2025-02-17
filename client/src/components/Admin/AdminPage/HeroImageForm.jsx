@@ -45,10 +45,10 @@ const HeroImageForm = () => {
           required
         />
       </div>
-      <div className="col-span-1 mt-4 mb-2">
+      <div className="col-span-1 mt-4 md:mt-10 mb-2">
         <button
           type="submit"
-          className="p-2 font-medium border border-blue-500 bg-white text-blue-500 hover:bg-blue-500 hover:text-white transition-all text-center rounded"
+          className="p-1.5 font-medium border border-blue-500 bg-white text-blue-500 hover:bg-blue-500 hover:text-white transition-all text-center rounded"
         >
           Update Hero Images
         </button>

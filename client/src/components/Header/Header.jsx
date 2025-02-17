@@ -91,7 +91,7 @@ const Header = () => {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div className="flex items-center justify-between px-4 md:px-10 py-4">
+      <div className="flex items-center justify-between px-10 py-4">
         <button
           className="lg:hidden grid item-center z-50"
           onMouseDown={(e) => {
