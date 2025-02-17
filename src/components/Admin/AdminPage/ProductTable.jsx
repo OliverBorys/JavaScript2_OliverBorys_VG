@@ -94,12 +94,13 @@ const ProductTable = () => {
                 />
               </td>
               <td className="border border-black px-4 py-2">
-                {product.isNew ? "Yes" : "No"}
+                {product.isNew.toLowerCase() === "yes" ? "Yes" : "No"}
               </td>
+
               <td className="border border-black">
                 <div className="flex flex-col p-2 sm:px-2 space-y-2">
                   <a
-                    href={`/admin/edit-product`}
+                    href={`/admin/edit-product/${product.id}`}
                     className="px-2 py-1 border border-blue-500 bg-white text-blue-500 hover:bg-blue-500 hover:text-white transition-all text-center rounded"
                   >
                     Edit

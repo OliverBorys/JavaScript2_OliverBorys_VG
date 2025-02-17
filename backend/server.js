@@ -1,12 +1,10 @@
 import express from "express";
 import Database from "better-sqlite3";
 import cors from "cors";
-import dotenv from "dotenv";
 
-dotenv.config();
 
 const app = express();
-const PORT = Number(process.env.PORT) || 5000;
+const PORT = 5000;
 
 // Middleware
 app.use(cors());
@@ -79,6 +77,50 @@ app.post("/api/products", (req, res) => {
 
   res.json({ id: result.lastInsertRowid, productName, price, publishingDate, categoryId });
 });
+
+app.put("/api/products/:id", (req, res) => {
+  const { id } = req.params;
+  const { productName, price, image, secondaryImage1, secondaryImage2, secondaryImage3, brand, productDescription, isNew, categoryId, publishingDate } = req.body;
+
+  const stmt = db.prepare(`
+    UPDATE products 
+    SET 
+      productName = ?, 
+      price = ?, 
+      image = ?, 
+      secondaryImage1 = ?, 
+      secondaryImage2 = ?, 
+      secondaryImage3 = ?, 
+      brand = ?, 
+      productDescription = ?, 
+      isNew = ?, 
+      categoryId = ?, 
+      publishingDate = ?
+    WHERE id = ?
+  `);
+
+  const result = stmt.run(
+    productName, 
+    price, 
+    image, 
+    secondaryImage1, 
+    secondaryImage2, 
+    secondaryImage3, 
+    brand, 
+    productDescription, 
+    isNew, 
+    categoryId, 
+    publishingDate, 
+    id
+  );
+
+  if (result.changes === 0) {
+    return res.status(404).json({ error: "Product not found" });
+  }
+
+  res.json({ message: "Product updated successfully" });
+});
+
 
 app.delete("/api/products/:id", (req, res) => {
   const stmt = db.prepare("DELETE FROM products WHERE id = ?");
