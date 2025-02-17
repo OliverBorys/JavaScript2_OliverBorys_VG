@@ -10,7 +10,7 @@ It features a **React frontend** and an **Express.js + SQLite backend** that all
 - **Product Catalog** – Browse a selection of luxury fashion products.
 - **Product Details** – View individual product details, images, and descriptions.
 - **Category Filtering** – Products are categorized (Shoes, Clothes, Bags, Watches, Sunglasses).
-– Styled with **Tailwind CSS**.
+- **UI** – Styled with **Tailwind CSS**.
 
 ---
 
@@ -26,6 +26,41 @@ It features a **React frontend** and an **Express.js + SQLite backend** that all
 ```sh
 git clone https://github.com/OliverBorys/JavaScript2_OliverBorys_VG.git
 cd JavaScript2_OliverBorys_VG
+
+```md
+### **2️⃣ Install Dependencies**
+After cloning the repository, navigate to the project folder and install dependencies:
+
+#### **📌 Install Frontend Dependencies**
+```sh
+npm install
+
+#### **📌 Install Backend Dependencies**
+```sh
+cd backend
+npm install
+
+---
+
+### **✅ Why This is Important?**
+- The **frontend** (`React`) and **backend** (`Express`) are separate, each requiring its own dependencies.
+- Running `npm install` in the **frontend** directory installs React-related dependencies.
+- Running `npm install` in the **backend** installs Express, SQLite, and other server dependencies.
+
+---
+
+### **🚀 Final Steps to Run the Project**
+After installing dependencies, users can start both **frontend and backend**:
+
+#### **Start Backend (`Express + SQLite`)**
+```sh
+cd backend
+npm run dev
+
+#### **Start Frontend (`React + Vite`)**
+```sh
+cd ../
+npm run dev
 
 
 
