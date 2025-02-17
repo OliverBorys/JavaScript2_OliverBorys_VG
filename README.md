@@ -27,16 +27,13 @@ It features a **React frontend** and an **Express.js + SQLite backend** that all
 git clone https://github.com/OliverBorys/JavaScript2_OliverBorys_VG.git
 cd JavaScript2_OliverBorys_VG
 
-```md
 ### **2️⃣ Install Dependencies**
 After cloning the repository, navigate to the project folder and install dependencies:
 
 #### **📌 Install Frontend Dependencies**
-```sh
 npm install
 
 #### **📌 Install Backend Dependencies**
-```sh
 cd backend
 npm install
 
@@ -53,50 +50,9 @@ npm install
 After installing dependencies, users can start both **frontend and backend**:
 
 #### **Start Backend (`Express + SQLite`)**
-```sh
 cd backend
 npm run dev
 
 #### **Start Frontend (`React + Vite`)**
-```sh
 cd ../
-npm run dev
-
-
-
-
-Dependencies
-npm install
-npm install react-router-dom
-npm install -D tailwindcss postcss autoprefixer
-npm install tailwindcss @tailwindcss/vite
-npm install -D prettier prettier-plugin-tailwindcss
-npm install tailwindcss
-npm install prop-types
-
-
-
-mkdir backend
-cd backend
-
-npm init -y
-
-npm install express better-sqlite3 cors dotenv
-
-npm install --save-dev nodemon
-
-mkdir db
-touch db/products.db
-touch server.js
-
-Add nodemon to package.json
-
-
-
-Don't forget to start the server on the backend and on frontend, otherwise the products won't be able to fetch
-Crtl ö
-npm run dev
-
-open new terminal
-cd backend
 npm run dev
