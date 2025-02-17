@@ -215,7 +215,7 @@ const Header = () => {
 
       <div
         ref={sidebarRef}
-        className={`fixed top-14 left-0 h-full w-full sm:w-1/3 text-black bg-white transform ${
+        className={`fixed top-14 lg:top-18 left-0 h-full w-full sm:w-1/3 text-black bg-white transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 z-40 shadow-lg`}
       >
@@ -259,7 +259,7 @@ const Header = () => {
 
       <div
         ref={cartRef}
-        className={`fixed top-18.5 right-0 h-full w-full md:w-2/5 bg-white shadow-lg transform ${
+        className={`fixed top-14 lg:top-18 right-0 h-full w-full md:w-2/5 bg-white shadow-lg transform ${
           isCartSidebarOpen ? "translate-x-0" : "translate-x-full"
         } transition-transform duration-300 z-40 shadow-lg`}
       >
@@ -307,8 +307,10 @@ const Header = () => {
                   </label>
                   <input
                     type="text"
+                    id="username"
                     name="username"
                     required
+                    autoComplete="username"
                     className="p-1 border border-black rounded focus:outline-none focus:border-blue-500"
                   />
 
@@ -317,8 +319,10 @@ const Header = () => {
                   </label>
                   <input
                     type="password"
+                    id="password"
                     name="password"
                     required
+                    autoComplete="current-password"
                     className="p-1 border border-black rounded focus:outline-none focus:border-blue-500"
                   />
 
