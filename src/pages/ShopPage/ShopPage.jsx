@@ -21,7 +21,7 @@ const ShopPage = () => {
       .catch((error) => console.error("Error fetching categories:", error));
   }, []);
 
-  const handleSortChange = (event) => setSort(event.target.value);
+  const handleSortChange = (value) => setSort(value);
 
   const handleCategoryChange = (category) => setSelectedCategory(category);
 

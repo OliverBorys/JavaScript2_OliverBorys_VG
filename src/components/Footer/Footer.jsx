@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -5,28 +6,28 @@ const Footer = () => {
       <div className="px-4 py-12 mx-auto space-y-8 overflow-hidden sm:px-6 lg:px-8">
         <nav className="flex flex-wrap justify-center -mx-5 -my-2">
           <div className="px-5 py-2">
-            <a
-              href="/about"
+            <Link
+              to="/about"
               className="text-base leading-6 text-gray-500 hover:text-white"
             >
-              About Us
-            </a>
+              About us
+            </Link>
           </div>
           <div className="px-5 py-2">
-            <a
-              href="/team"
+          <Link
+              to="/team"
               className="text-base leading-6 text-gray-500 hover:text-white"
             >
               Team
-            </a>
+            </Link>
           </div>
           <div className="px-5 py-2">
-            <a
-              href="/contact"
+          <Link
+              to="/contact"
               className="text-base leading-6 text-gray-500 hover:text-white"
             >
               Contact
-            </a>
+            </Link>
           </div>
         </nav>
         <div className="flex justify-center mt-8 space-x-6">

@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import CategoryFilter from "../../components/Shop/CategoryFilter";
 import SortDropdown from "../../components/Shop/SortDropdown";
 import ProductGrid from "../../components/Shop/ProductGrid";
+import NoProductsFound from "../../components/Shop/NoProductsFound";
 
-const ShopPage = () => {
+const SearchPage = () => {
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("q");
   const [products, setProducts] = useState([]);
   const [sort, setSort] = useState("newest");
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -21,33 +25,38 @@ const ShopPage = () => {
       .catch((error) => console.error("Error fetching categories:", error));
   }, []);
 
-  const handleSortChange = (event) => setSort(event.target.value);
+  const handleSortChange = (value) => setSort(value);
 
   const handleCategoryChange = (category) => setSelectedCategory(category);
 
   const filteredProducts = products.filter((product) =>
-    selectedCategory ? product.categoryName === selectedCategory : true
+    query
+      ? product.productName.toLowerCase().includes(query.toLowerCase()) &&
+        (selectedCategory ? product.categoryName === selectedCategory : true)
+      : selectedCategory
+      ? product.categoryName === selectedCategory
+      : true
   );
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
-    if (sort === "newest")
-      return new Date(b.publishingDate) - new Date(a.publishingDate);
-    if (sort === "oldest")
-      return new Date(a.publishingDate) - new Date(b.publishingDate);
+    if (sort === "newest") return new Date(b.publishingDate) - new Date(a.publishingDate);
+    if (sort === "oldest") return new Date(a.publishingDate) - new Date(b.publishingDate);
     if (sort === "highest") return b.price - a.price;
     if (sort === "lowest") return a.price - b.price;
     return 0;
   });
 
   useEffect(() => {
-    document.title = "Shop";
-  }, []);
+    document.title = `Search results for: ${query}`;
+  }, [query]);
 
   return (
     <main className="py-10 flex-grow">
-      <section className="container mx-auto px-4 pt-12">
+      <section className="container mx-auto px-4 pt-20">
         <header className="text-center my-8">
-          <h1 className="text-2xl font-medium text-gray-800">Shop</h1>
+          <h1 className="text-2xl font-medium text-gray-800">
+            {query ? `Search Results for: ${query}` : "Shop"}
+          </h1>
         </header>
 
         <div className="flex flex-row gap-4 mb-4 place-self-center sm:place-self-auto sm:flex-col">
@@ -63,10 +72,14 @@ const ShopPage = () => {
           </div>
         </div>
 
-        <ProductGrid products={sortedProducts} />
+        {sortedProducts.length > 0 ? (
+          <ProductGrid products={sortedProducts} />
+        ) : (
+          <NoProductsFound query={query} />
+        )}
       </section>
     </main>
   );
 };
 
-export default ShopPage;
+export default SearchPage;
