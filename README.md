@@ -41,7 +41,7 @@ npm install
 
 ### **✅ Why This is Important?**
 - The **frontend** (`React`) and **backend** (`Express`) are separate, each requiring its own dependencies.
-- Running `npm install` in the **frontend** directory installs React-related dependencies.
+- Running `npm install` in the **project** directory installs React-related dependencies.
 - Running `npm install` in the **backend** installs Express, SQLite, and other server dependencies.
 
 ---
