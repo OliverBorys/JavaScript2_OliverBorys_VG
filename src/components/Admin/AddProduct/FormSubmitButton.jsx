@@ -7,7 +7,7 @@ const SubmitButton = ({ text, disabled }) => {
   const handleClick = () => {
     if (!disabled) {
       setTimeout(() => {
-        navigate("/admin"); // Redirect to /admin after clicking
+        navigate("/admin");
       }, 500);
     }
   };
