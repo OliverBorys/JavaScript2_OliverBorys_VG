@@ -174,12 +174,12 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             <div className="relative w-48">
               <div className="search-container">
-                <form action="/search" method="GET" className="search-input rounded-lg bg-white">
+                <form action="/search" method="GET" className="search-input rounded-lg">
                   <input
                     type="text"
                     name="q"
                     placeholder="Search..."
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none text-black"
+                    className="w-full px-4 py-2 border-1 rounded-lg focus:outline-none text-black"
                   />
                 </form>
               </div>
