@@ -38,6 +38,7 @@ db.prepare(
       FOREIGN KEY (categoryId) REFERENCES categories(id) ON DELETE SET NULL
   )`
 ).run();
+  
 
 app.get("/api/products", (req, res) => {
   const products = db.prepare(`
@@ -90,6 +91,9 @@ app.get("/api/categories", (req, res) => {
   res.json(categories);
 });
 
+
+
+  
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
