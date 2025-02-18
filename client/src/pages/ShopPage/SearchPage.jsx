@@ -6,11 +6,13 @@ import ProductGrid from "../../components/Shop/ProductGrid";
 import NoProductsFound from "../../components/Shop/NoProductsFound";
 
 const SearchPage = () => {
-  const [searchParams] = useSearchParams();
-  const query = searchParams.get("q");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get("q") || "";
+  const categoryFromUrl = searchParams.get("category") || "";
+
   const [products, setProducts] = useState([]);
   const [sort, setSort] = useState("newest");
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(categoryFromUrl);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -25,16 +27,31 @@ const SearchPage = () => {
       .catch((error) => console.error("Error fetching categories:", error));
   }, []);
 
-  const handleSortChange = (value) => setSort(value);
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    setSearchParams((prevParams) => {
+      const newParams = new URLSearchParams(prevParams);
+      if (category) {
+        newParams.set("category", category.toLowerCase());
+      } else {
+        newParams.delete("category");
+      }
+      return newParams;
+    });
+  };
 
-  const handleCategoryChange = (category) => setSelectedCategory(category);
+  useEffect(() => {
+    setSelectedCategory(categoryFromUrl);
+  }, [categoryFromUrl]);
+
+  const handleSortChange = (value) => setSort(value);
 
   const filteredProducts = products.filter((product) =>
     query
       ? product.productName.toLowerCase().includes(query.toLowerCase()) &&
-        (selectedCategory ? product.categoryName === selectedCategory : true)
+        (selectedCategory ? product.categoryName.toLowerCase() === selectedCategory.toLowerCase() : true)
       : selectedCategory
-      ? product.categoryName === selectedCategory
+      ? product.categoryName.toLowerCase() === selectedCategory.toLowerCase()
       : true
   );
 
@@ -47,7 +64,7 @@ const SearchPage = () => {
   });
 
   useEffect(() => {
-    document.title = `Search results for: ${query}`;
+    document.title = query ? `Search results for: ${query}` : "Shop";
   }, [query]);
 
   return (
