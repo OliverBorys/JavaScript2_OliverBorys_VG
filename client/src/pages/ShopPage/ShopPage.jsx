@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import CategoryFilter from "../../components/Shop/CategoryFilter";
 import SortDropdown from "../../components/Shop/SortDropdown";
 import ProductGrid from "../../components/Shop/ProductGrid";
@@ -6,8 +7,9 @@ import ProductGrid from "../../components/Shop/ProductGrid";
 const ShopPage = () => {
   const [products, setProducts] = useState([]);
   const [sort, setSort] = useState("newest");
-  const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedCategory = searchParams.get("category") || "";
 
   useEffect(() => {
     fetch("http://localhost:5000/api/products")
@@ -23,17 +25,17 @@ const ShopPage = () => {
 
   const handleSortChange = (value) => setSort(value);
 
-  const handleCategoryChange = (category) => setSelectedCategory(category);
+  const handleCategoryChange = (category) => {
+    setSearchParams(category ? { category } : {});
+  };
 
   const filteredProducts = products.filter((product) =>
-    selectedCategory ? product.categoryName === selectedCategory : true
+    selectedCategory ? product.categoryName.toLowerCase() === selectedCategory.toLowerCase() : true
   );
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
-    if (sort === "newest")
-      return new Date(b.publishingDate) - new Date(a.publishingDate);
-    if (sort === "oldest")
-      return new Date(a.publishingDate) - new Date(b.publishingDate);
+    if (sort === "newest") return new Date(b.publishingDate) - new Date(a.publishingDate);
+    if (sort === "oldest") return new Date(a.publishingDate) - new Date(b.publishingDate);
     if (sort === "highest") return b.price - a.price;
     if (sort === "lowest") return a.price - b.price;
     return 0;

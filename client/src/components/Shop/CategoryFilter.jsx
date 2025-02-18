@@ -1,6 +1,10 @@
 import PropTypes from "prop-types";
 
-const CategoryFilter = ({ categories, selectedCategory, handleCategoryChange }) => {
+const CategoryFilter = ({
+  categories,
+  selectedCategory,
+  handleCategoryChange,
+}) => {
   return (
     <div className="w-full">
       <div className="sm:hidden flex justify-center gap-4 w-full">
@@ -36,15 +40,21 @@ const CategoryFilter = ({ categories, selectedCategory, handleCategoryChange }) 
         {categories.map((category) => (
           <button
             key={category.id}
-            onClick={() => handleCategoryChange(category.categoryName)}
+            onClick={() =>
+              handleCategoryChange(category.categoryName.toLowerCase())
+            }
             className={`relative text-gray-700 pb-2 transition-all duration-300 hover:text-black ${
-              selectedCategory === category.categoryName ? "font-bold" : ""
+              selectedCategory === category.categoryName.toLowerCase()
+                ? "font-bold"
+                : ""
             }`}
           >
             {category.categoryName}
             <span
               className={`absolute bottom-0 left-0 w-0 h-0.5 bg-black transition-all duration-300 ${
-                selectedCategory === category.categoryName ? "w-full" : "hover:w-full"
+                selectedCategory === category.categoryName.toLowerCase()
+                  ? "w-full"
+                  : "hover:w-full"
               }`}
             ></span>
           </button>
