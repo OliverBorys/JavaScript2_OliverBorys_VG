@@ -16,12 +16,13 @@ const CategoryGrid = () => {
   };
 
   return (
-    <section className="py-10">
+    <section>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {categories.map((category, index) => (
           <div
             key={index}
-            className="relative w-full h-[300px] flex flex-col items-center group cursor-pointer"
+            className="relative w-full h-[300px] flex flex-col items-center group cursor-pointer sm:col-span-2 sm:place-self-center md:object-center lg:col-span-1"
+
             onClick={() => handleCategoryClick(category.name)}
           >
             <img
@@ -30,7 +31,7 @@ const CategoryGrid = () => {
               className="w-full h-full object-cover object-center rounded-2xl transition-transform duration-300 group-hover:scale-105"
             />
             
-            <div className="absolute inset-0 flex items-center justify-center bg-transparent text-white text-2xl font-semibold rounded-2xl group-hover:bg-black/50 duration-300">
+            <div className="absolute inset-0 flex items-center justify-center bg-black/20 text-white text-2xl font-semibold rounded-2xl group-hover:bg-black/50 duration-300">
               {category.name}
             </div>
           </div>

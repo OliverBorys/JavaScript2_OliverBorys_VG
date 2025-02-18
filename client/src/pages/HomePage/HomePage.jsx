@@ -51,7 +51,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      <section className="py-10 mx-20 lg:mx-15">
+      <section className="py-10 mx-10 sm:mx-15 lg:mx-8">
         <div className="mb-10">
           <CategoryGrid />
         </div>

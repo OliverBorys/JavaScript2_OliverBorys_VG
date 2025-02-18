@@ -21,7 +21,6 @@ const AdminEditProductPage = () => {
     publishingDate: "",
   });
 
-  // Fetch product details and prefill form
   useEffect(() => {
     fetch(`http://localhost:5000/api/products/${id}`)
       .then((res) => res.json())
@@ -49,7 +48,7 @@ const AdminEditProductPage = () => {
     e.preventDefault();
 
     const response = await fetch(`http://localhost:5000/api/products/${id}`, {
-      method: "PUT", // Use PUT for updating an existing product
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     });
