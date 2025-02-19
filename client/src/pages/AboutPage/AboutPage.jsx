@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import AboutUsGrid from "../../components/About/AboutUsGrid";
 
 const AboutPage = () => {
 
@@ -6,7 +7,9 @@ const AboutPage = () => {
     document.title = "About us";
   }, []);
 
-    return <h1 className="text-center text-2xl mt-20 font-bold">About Us</h1>;
+    return ( 
+      <AboutUsGrid />
+    );
   };
   
 
