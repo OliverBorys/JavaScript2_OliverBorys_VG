@@ -6,7 +6,6 @@ import ShopPage from "./pages/ShopPage/ShopPage";
 import ProductDetailsPage from "./pages/ShopPage/ProductDetailsPage";
 import SearchPage from "./pages/ShopPage/SearchPage";
 import AboutPage from "./pages/AboutPage/AboutPage";
-import TeamPage from "./pages/AboutPage/TeamPage";
 import ContactPage from "./pages/ContactPage/ContactPage";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
@@ -26,7 +25,6 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/shop" element={<ShopPage />} />
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/team" element={<TeamPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/product-details" element={<ProductDetailsPage />} />
             <Route path="/search" element={<SearchPage />} />
