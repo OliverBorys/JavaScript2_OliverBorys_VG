@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import Accordion from "../../components/Admin/AdminPage/Accordion";
 import ProductTable from "../../components/Admin/AdminPage/ProductTable";
 import HeroImageForm from "../../components/Admin/AdminPage/HeroImageForm";
-import AdminUserSection from "../../components/Admin/AdminPage/AdminUserSection.jsx";
+import AdminUserSection from "../../components/Admin/AdminPage/AdminUserSection";
 
 const AdminPage = () => {
   useEffect(() => {
