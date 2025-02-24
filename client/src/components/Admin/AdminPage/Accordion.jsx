@@ -5,23 +5,24 @@ const Accordion = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="mb-4">
+    <div className="w-full border-b border-gray-900 last:border-b-0">
       <button
-        className="accordion-button flex justify-between items-center w-full bg-white text-[#3b0001] text-md font-medium px-6 py-4 border border-[#f7e0c8] rounded-md hover:bg-[#f7e0c8] transition"
+        className="flex justify-between items-center w-full text-gray-900 text-lg font-normal py-5 focus:outline-none"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {title}
-        <span
-          className={`accordion-icon text-[#3b0001] transition-transform duration-700 ${isOpen ? "rotate-180" : ""}`}
-        >
-          ▼
+        <span className="text-xl font-medium">{title}</span>
+        <span className="text-gray-900 text-2xl">
+          {isOpen ? "−" : "+"}
         </span>
       </button>
-      <div
-        className={`panel bg-gray-50 px-6 py-4 border border-t-0 rounded-md border-[#f7e0c8] ${isOpen ? "block" : "hidden"}`}
-      >
-        {children}
-      </div>
+      <div className="col-span-3 mt-2 bg-gray-900 h-[1px] mr-0"></div>
+
+
+      {isOpen && (
+        <div className="py-4 space-y-4 text-gray-900 text-md">
+          {children}
+        </div>
+      )}
     </div>
   );
 };
