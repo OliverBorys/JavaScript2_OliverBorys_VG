@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { getLikedProducts } from "../../utils/LocalStorage";
 import CategoryFilter from "../../components/Shop/CategoryFilter";
 import SortDropdown from "../../components/Shop/SortDropdown";
 import ProductGrid from "../../components/Shop/ProductGrid";
@@ -29,9 +30,17 @@ const ShopPage = () => {
     setSearchParams(category ? { category } : {});
   };
 
-  const filteredProducts = products.filter((product) =>
-    selectedCategory ? product.categoryName.toLowerCase() === selectedCategory.toLowerCase() : true
-  );
+  const handleLikeToggle = () => {
+    setProducts([...products]);
+  };
+
+  const filteredProducts = products.filter((product) => {
+    if (selectedCategory === "favorites") {
+      const likedProducts = getLikedProducts();
+      return likedProducts.includes(product.id);
+    }
+    return selectedCategory ? product.categoryName.toLowerCase() === selectedCategory.toLowerCase() : true;
+  });
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     if (sort === "newest") return new Date(b.publishingDate) - new Date(a.publishingDate);
@@ -65,7 +74,7 @@ const ShopPage = () => {
           </div>
         </div>
 
-        <ProductGrid products={sortedProducts} />
+        <ProductGrid products={sortedProducts} onLikeToggle={handleLikeToggle} />
       </section>
     </main>
   );

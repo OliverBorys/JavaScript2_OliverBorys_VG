@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { getLikedProducts } from "../../utils/LocalStorage";
 import CategoryFilter from "../../components/Shop/CategoryFilter";
 import SortDropdown from "../../components/Shop/SortDropdown";
 import ProductGrid from "../../components/Shop/ProductGrid";
@@ -46,14 +47,18 @@ const SearchPage = () => {
 
   const handleSortChange = (value) => setSort(value);
 
-  const filteredProducts = products.filter((product) =>
-    query
+  const filteredProducts = products.filter((product) => {
+    if (selectedCategory === "favorites") {
+      const likedProducts = getLikedProducts();
+      return likedProducts.includes(product.id);
+    }
+    return query
       ? product.productName.toLowerCase().includes(query.toLowerCase()) &&
         (selectedCategory ? product.categoryName.toLowerCase() === selectedCategory.toLowerCase() : true)
       : selectedCategory
       ? product.categoryName.toLowerCase() === selectedCategory.toLowerCase()
-      : true
-  );
+      : true;
+  });
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     if (sort === "newest") return new Date(b.publishingDate) - new Date(a.publishingDate);

@@ -2,11 +2,13 @@ import PropTypes from "prop-types";
 import ProductCard from "./ProductCard";
 import NoProductsFound from "./NoProductsFound";
 
-const ProductGrid = ({ products }) => {
+const ProductGrid = ({ products, onLikeToggle }) => {  
   return (
     <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center">
       {products.length > 0 ? (
-        products.map((product) => <ProductCard key={product.id} product={product} />)
+        products.map((product) => (
+          <ProductCard key={product.id} product={product} onLikeToggle={onLikeToggle} />
+        ))
       ) : (
         <NoProductsFound />
       )}
@@ -15,22 +17,8 @@ const ProductGrid = ({ products }) => {
 };
 
 ProductGrid.propTypes = {
-  products: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      productName: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string,
-      secondaryImage1: PropTypes.string,
-      secondaryImage2: PropTypes.string,
-      secondaryImage3: PropTypes.string,
-      brand: PropTypes.string,
-      productDescription: PropTypes.string,
-      isNew: PropTypes.string,
-      categoryName: PropTypes.string,
-      publishingDate: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+  products: PropTypes.array.isRequired,
+  onLikeToggle: PropTypes.func, 
 };
 
 export default ProductGrid;
