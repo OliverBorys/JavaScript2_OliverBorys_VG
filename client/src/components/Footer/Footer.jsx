@@ -2,38 +2,41 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-slate-950 w-full mt-8">
+    <footer className="bg-[#f7e0c8] w-full mt-8">
       <div className="px-4 py-12 mx-auto space-y-8 overflow-hidden sm:px-6 lg:px-8">
         <nav className="flex flex-wrap justify-center -mx-5 -my-2">
           <div className="px-5 py-2">
             <Link
+              to="/shop"
+              className="relative text-base leading-6 text-[#3b0001] group"
+            >
+              Shop
+              <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#3b0001] transition-all duration-500 group-hover:w-full"></span>
+            </Link>
+          </div>
+          <div className="px-5 py-2">
+            <Link
               to="/about"
-              className="text-base leading-6 text-gray-500 hover:text-white"
+              className="relative text-base leading-6 text-[#3b0001] group"
             >
               About us
+              <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#3b0001] transition-all duration-500 group-hover:w-full"></span>
             </Link>
           </div>
           <div className="px-5 py-2">
-          <Link
-              to="/team"
-              className="text-base leading-6 text-gray-500 hover:text-white"
-            >
-              Team
-            </Link>
-          </div>
-          <div className="px-5 py-2">
-          <Link
+            <Link
               to="/contact"
-              className="text-base leading-6 text-gray-500 hover:text-white"
+              className="relative text-base leading-6 text-[#3b0001] group"
             >
               Contact
+              <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#3b0001] transition-all duration-500 group-hover:w-full"></span>
             </Link>
           </div>
         </nav>
         <div className="flex justify-center mt-8 space-x-6">
           <a
             href="#"
-            className="text-gray-400 hover:text-white duration-300 hover:scale-120"
+            className="text-[#3b0001] hover:text-[#0866ff] duration-300 hover:scale-140"
           >
             <span className="sr-only">Facebook</span>
             <svg
@@ -51,7 +54,7 @@ const Footer = () => {
           </a>
           <a
             href="#"
-            className="text-gray-400 hover:text-white duration-300 hover:scale-120"
+            className="text-[#3b0001] hover:text-[#f601b8] duration-300 hover:scale-140"
           >
             <span className="sr-only">Instagram</span>
             <svg
@@ -70,7 +73,7 @@ const Footer = () => {
           </a>
           <a
             href="#"
-            className="text-gray-400 hover:text-white duration-300 hover:scale-120"
+            className="text-[#3b0001] hover:text-[#1c9cea] duration-300 hover:scale-140"
           >
             <span className="sr-only">Twitter</span>
             <svg
@@ -84,7 +87,7 @@ const Footer = () => {
           </a>
           <a
             href="https://github.com/jnjuniper/grupp-tre"
-            className="text-gray-400 hover:text-white duration-300 hover:scale-120"
+            className="text-[#3b0001] hover:text-black duration-300 hover:scale-140"
           >
             <span className="sr-only">GitHub</span>
             <svg
@@ -102,7 +105,7 @@ const Footer = () => {
           </a>
           <a
             href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            className="text-gray-400 hover:text-white duration-300 hover:scale-120"
+            className="text-[#3b0001] hover:text-[#ff0033] duration-300 hover:scale-140"
           >
             <span className="sr-only">YouTube</span>
             <svg
@@ -115,7 +118,7 @@ const Footer = () => {
             </svg>
           </a>
         </div>
-        <p className="mt-8 text-base leading-6 text-center text-gray-400">
+        <p className="mt-8 text-base leading-6 text-center text-[#3b0001]">
           © 2025 Grupptre AB. All rights reserved.
         </p>
       </div>
