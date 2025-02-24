@@ -54,22 +54,27 @@ const SearchPage = () => {
     }
     return query
       ? product.productName.toLowerCase().includes(query.toLowerCase()) &&
-        (selectedCategory ? product.categoryName.toLowerCase() === selectedCategory.toLowerCase() : true)
+          (selectedCategory
+            ? product.categoryName.toLowerCase() ===
+              selectedCategory.toLowerCase()
+            : true)
       : selectedCategory
-      ? product.categoryName.toLowerCase() === selectedCategory.toLowerCase()
-      : true;
+        ? product.categoryName.toLowerCase() === selectedCategory.toLowerCase()
+        : true;
   });
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
-    if (sort === "newest") return new Date(b.publishingDate) - new Date(a.publishingDate);
-    if (sort === "oldest") return new Date(a.publishingDate) - new Date(b.publishingDate);
+    if (sort === "newest")
+      return new Date(b.publishingDate) - new Date(a.publishingDate);
+    if (sort === "oldest")
+      return new Date(a.publishingDate) - new Date(b.publishingDate);
     if (sort === "highest") return b.price - a.price;
     if (sort === "lowest") return a.price - b.price;
     return 0;
   });
 
   useEffect(() => {
-    document.title = query ? `Search results for: ${query}` : "Shop";
+    document.title = query ? `Search results: ${query}` : "Shop";
   }, [query]);
 
   return (
@@ -77,7 +82,7 @@ const SearchPage = () => {
       <section className="container mx-auto px-4 pt-20">
         <header className="text-center my-8">
           <h1 className="text-2xl font-medium text-gray-800">
-            {query ? `Search Results for: ${query}` : "Shop"}
+            {query ? `Search results: ${query}` : "Shop"}
           </h1>
         </header>
 
@@ -95,7 +100,16 @@ const SearchPage = () => {
         </div>
 
         {sortedProducts.length > 0 ? (
-          <ProductGrid products={sortedProducts} />
+          <>
+            <ProductGrid products={sortedProducts} />
+            <div className="text-center mt-10">
+              <p className="text-gray-800">
+                Showing <strong>{sortedProducts.length}</strong>{" "}
+                {sortedProducts.length === 1 ? "product" : "products"}
+              </p>
+              <div className="mt-2 mx-20 h-0.5 bg-black"></div>
+            </div>
+          </>
         ) : (
           <NoProductsFound query={query} />
         )}
