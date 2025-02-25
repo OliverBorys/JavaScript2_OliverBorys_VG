@@ -73,6 +73,10 @@ const SearchPage = () => {
     return 0;
   });
 
+  const handleLikeToggle = () => {
+    setProducts([...products]);
+  };
+
   useEffect(() => {
     document.title = query ? `Search results: ${query}` : "Shop";
   }, [query]);
@@ -101,7 +105,7 @@ const SearchPage = () => {
 
         {sortedProducts.length > 0 ? (
           <>
-            <ProductGrid products={sortedProducts} />
+            <ProductGrid products={sortedProducts} onLikeToggle={handleLikeToggle} />
             <div className="text-center mt-10">
               <p className="text-gray-800">
                 Showing <strong>{sortedProducts.length}</strong>{" "}

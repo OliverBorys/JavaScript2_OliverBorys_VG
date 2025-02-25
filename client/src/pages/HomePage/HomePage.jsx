@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 const HomePage = () => {
   const [trendingProducts, setTrendingProducts] = useState([]);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const fetchTrendingProducts = async () => {
@@ -34,6 +35,10 @@ const HomePage = () => {
     fetchTrendingProducts();
   }, []);
 
+  const handleLikeToggle = () => {
+    setProducts([...products]);
+  };
+
   useEffect(() => {
     document.title = "Home";
   }, []);
@@ -47,7 +52,7 @@ const HomePage = () => {
           <h2 className="text-center text-2xl font-bold mb-6">
             What&rsquo;s Trending Now
           </h2>
-          <ProductGrid products={trendingProducts} />
+          <ProductGrid products={trendingProducts} onLikeToggle={handleLikeToggle} />
         </div>
       </section>
 

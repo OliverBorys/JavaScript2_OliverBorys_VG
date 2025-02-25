@@ -19,6 +19,7 @@ const ProductCard = ({ product, onLikeToggle }) => {
     setLiked(updatedLikes.includes(product.id));
     
     if (typeof onLikeToggle === "function") {
+      console.log("calling onLikeToggle")
       onLikeToggle();
     } else {
       console.warn("onLikeToggle is not defined or not a function!");
