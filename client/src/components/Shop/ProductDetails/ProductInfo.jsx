@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-const ProductInfoAccordion = () => {
+const ProductInfo = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -43,7 +43,7 @@ const ProductInfoAccordion = () => {
 
       <div className="mb-4">
         <h4 className="text-lg font-semibold text-gray-900 mb-2">Select Size</h4>
-        <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+        <div className="grid grid-cols-3 gap-2">
           {sizes.map((size) => (
             <label
               key={size}
@@ -92,4 +92,4 @@ const ProductInfoAccordion = () => {
   );
 };
 
-export default ProductInfoAccordion;
+export default ProductInfo;

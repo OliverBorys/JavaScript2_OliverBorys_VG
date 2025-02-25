@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ProductImage from "../../components/Shop/ProductDetails/ProductImage";
-import ProductInfoAccordion from "../../components/Shop/ProductDetails/ProductInfoAccordion";
+import ProductInfo from "../../components/Shop/ProductDetails/ProductInfo";
 import Swiper from "../../components/Shop/ProductDetails/Swiper";
 
 const ProductDetailsPage = () => {
@@ -21,7 +21,7 @@ const ProductDetailsPage = () => {
         }
         const data = await response.json();
         setProduct(data);
-        document.title = data.productName; // Set document title dynamically
+        document.title = data.productName;
       } catch (err) {
         setError(err.message);
       } finally {
@@ -38,17 +38,13 @@ const ProductDetailsPage = () => {
     return <p className="text-center text-gray-500">Product not found</p>;
 
   return (
-<main className="w-full mt-14 sm:mt-20 lg:mt-24">
-  <section className="grid sm:grid-cols-2 sm:mx-4 gap-6 items-start">
-    <div className="self-start">
-      <ProductImage product={product} />
-    </div>
-    <div className="self-start">
-      <ProductInfoAccordion />
-    </div>
-  </section>
-  <Swiper productId={id} />
-</main>
+    <main className="mt-14 sm:mt-20 lg:mt-24">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start max-w-screen-xl mx-auto px-4">
+        <ProductImage product={product} />
+        <ProductInfo />
+      </div>
+      <Swiper productId={id} />
+    </main>
   );
 };
 
