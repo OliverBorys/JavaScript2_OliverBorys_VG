@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { addToCart } from "../../../utils/LocalStorage";
+import PropTypes from "prop-types"
 
-const ProductInfo = () => {
+const ProductInfo = ({ onCartUpdate }) => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
   const [selectedSize, setSelectedSize] = useState(null);
 
   useEffect(() => {
@@ -32,7 +33,12 @@ const ProductInfo = () => {
   if (error) return <p className="text-center text-red-500">{error}</p>;
   if (!product) return <p className="text-center text-gray-500">Product not found</p>;
 
-  const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
+  const handleAddToCart = () => {
+    const cartProduct = { ...product, size: selectedSize };
+    addToCart(cartProduct);
+    window.dispatchEvent(new Event("cartUpdated"));
+    onCartUpdate(true);
+  };
 
   return (
     <div className="w-full max-w-2xl mx-auto p-6 bg-white shadow-lg">
@@ -44,7 +50,7 @@ const ProductInfo = () => {
       <div className="mb-4">
         <h4 className="text-lg font-semibold text-gray-900 mb-2">Select Size</h4>
         <div className="grid grid-cols-3 gap-2">
-          {sizes.map((size) => (
+          {["XS", "S", "M", "L", "XL", "XXL"].map((size) => (
             <label
               key={size}
               className={`border px-4 py-2 text-center cursor-pointer transition ${
@@ -68,28 +74,17 @@ const ProductInfo = () => {
 
       <button
         className="w-full bg-black text-white font-medium py-3 hover:scale-95 transition"
-        onClick={() => alert(`Added ${product.productName} (Size: ${selectedSize || "Not Selected"}) to cart!`)}
+        onClick={handleAddToCart}
       >
         Add to Cart
       </button>
-
-      <div className="w-full border-t border-gray-300 mt-6 pt-4">
-        <button
-          className="flex justify-between items-center w-full text-gray-900 text-lg font-normal focus:outline-none"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <span className="text-xl font-medium">Product Description</span>
-          <span className="text-gray-900 text-2xl">{isOpen ? "−" : "+"}</span>
-        </button>
-
-        {isOpen && (
-          <div className="py-4 space-y-4 text-gray-900 text-md">
-            <p>{product.productDescription}</p>
-          </div>
-        )}
-      </div>
     </div>
   );
+};
+
+
+ProductInfo.propTypes = {
+  onCartUpdate: PropTypes.func.isRequired,
 };
 
 export default ProductInfo;

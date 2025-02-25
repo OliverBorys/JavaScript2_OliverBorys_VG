@@ -1,5 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
+import {
+  getCartItems,
+  removeFromCart,
+  updateCartQuantity,
+} from "../../utils/LocalStorage";
 import logoWhite from "/images/logo-white.svg";
 import logoBlack from "/images/logo.svg";
 import loginWhite from "/images/login-white.svg";
@@ -10,6 +15,7 @@ import cartBlack from "/images/cart.svg";
 const Header = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isCartSidebarOpen, setCartSidebarOpen] = useState(false);
+  const [cartItems, setCartItems] = useState(getCartItems());
   const [isLoginPopupOpen, setLoginPopupOpen] = useState(false);
   const [isScrolled, setScrolled] = useState(false);
   const [isHovered, setHovered] = useState(false);
@@ -20,7 +26,8 @@ const Header = () => {
   const cartRef = useRef(null);
   const loginPopupRef = useRef(null);
 
-  const isTransparentPage = location.pathname === "/" || location.pathname === "/about";
+  const isTransparentPage =
+    location.pathname === "/" || location.pathname === "/about";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,6 +36,44 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    const handleCartUpdate = () => {
+      setCartItems(getCartItems());
+      setCartSidebarOpen(true);
+    };
+
+    window.addEventListener("cartUpdated", handleCartUpdate);
+    return () => window.removeEventListener("cartUpdated", handleCartUpdate);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (cartRef.current && !cartRef.current.contains(event.target)) {
+        setCartSidebarOpen(false);
+      }
+    };
+
+    if (isCartSidebarOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isCartSidebarOpen]);
+
+  const handleRemove = (productId) => {
+    removeFromCart(productId);
+    setCartItems(getCartItems());
+  };
+
+  const handleQuantityChange = (productId, quantity) => {
+    updateCartQuantity(productId, quantity);
+    setCartItems(getCartItems());
+  };
+
+  const totalAmount = cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -58,7 +103,13 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isSidebarOpen, isCartSidebarOpen, isLoginPopupOpen]);
 
-  const isHeaderWhite = !isTransparentPage || isScrolled || isHovered || isSidebarOpen || isCartSidebarOpen || isLoginPopupOpen;
+  const isHeaderWhite =
+    !isTransparentPage ||
+    isScrolled ||
+    isHovered ||
+    isSidebarOpen ||
+    isCartSidebarOpen ||
+    isLoginPopupOpen;
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -81,7 +132,6 @@ const Header = () => {
   const handleLogout = () => {
     setIsLoggedIn(false);
   };
-
 
   return (
     <header
@@ -174,7 +224,11 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             <div className="relative w-48">
               <div className="search-container">
-                <form action="/search" method="GET" className="search-input rounded-lg">
+                <form
+                  action="/search"
+                  method="GET"
+                  className="search-input rounded-lg"
+                >
                   <input
                     type="text"
                     name="q"
@@ -220,30 +274,42 @@ const Header = () => {
         } transition-transform duration-300 z-40 shadow-lg`}
       >
         <ul className="mt-4 space-y-4 px-4">
-        <li>
-          <div className="search-container">
-            <form action="/search" method="GET" className="search-input">
-              <input
-                type="text"
-                name="q"
-                placeholder="Search..."
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none text-black"
-              />
-            </form>
-          </div>
-        </li>
           <li>
-            <Link to="/shop" className="text-lg font-medium" onClick={toggleSidebar}>
+            <div className="search-container">
+              <form action="/search" method="GET" className="search-input">
+                <input
+                  type="text"
+                  name="q"
+                  placeholder="Search..."
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none text-black"
+                />
+              </form>
+            </div>
+          </li>
+          <li>
+            <Link
+              to="/shop"
+              className="text-lg font-medium"
+              onClick={toggleSidebar}
+            >
               Shop
             </Link>
           </li>
           <li>
-            <Link to="/about" className="text-lg font-medium" onClick={toggleSidebar}>
+            <Link
+              to="/about"
+              className="text-lg font-medium"
+              onClick={toggleSidebar}
+            >
               About
             </Link>
           </li>
           <li>
-            <Link to="/contact" className="text-lg font-medium" onClick={toggleSidebar}>
+            <Link
+              to="/contact"
+              className="text-lg font-medium"
+              onClick={toggleSidebar}
+            >
               Contact
             </Link>
           </li>
@@ -257,28 +323,81 @@ const Header = () => {
         </ul>
       </div>
 
-      <div
-        ref={cartRef}
-        className={`fixed top-14 lg:top-18 right-0 h-full w-full md:w-2/5 bg-white shadow-lg transform ${
-          isCartSidebarOpen ? "translate-x-0" : "translate-x-full"
-        } transition-transform duration-300 z-40 shadow-lg`}
-      >
-        <div className="p-4 flex flex-col gap-4 items-start">
-          <h2 className="text-2xl font-bold">Your Cart</h2>
-          <div id="cart-content" className="w-full"></div>
+      {isCartSidebarOpen && (
+        <div
+          ref={cartRef}
+          className="fixed top-14 lg:top-18 right-0 h-full w-full md:w-3/5 bg-white shadow-lg transform transition-transform duration-300 z-40 
+    flex flex-col"
+        >
+          {/* ✅ Make the cart content scrollable */}
+          <div className="p-4 flex-1 overflow-y-auto max-h-[80vh]">
+            <h2 className="text-2xl font-bold">Your Cart</h2>
 
-          <div className="mt-4 w-full text-right text-lg font-bold">
-            Total: <span id="cart-total">0</span>
+            <div className="w-full">
+              {cartItems.length === 0 ? (
+                <p>Your cart is empty</p>
+              ) : (
+                cartItems.map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex justify-between items-center border-b py-2"
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.productName}
+                      className="w-20 h-20 object-contain"
+                    />
+                    <div className="flex-1 ml-4">
+                      <h3 className="font-medium">{item.productName}</h3>
+                      <p className="text-sm text-gray-500">{item.brand}</p>
+                      <p>${item.price}</p>
+                    </div>
+                    <div className="flex items-center">
+                      <button
+                        onClick={() =>
+                          handleQuantityChange(item.id, item.quantity - 1)
+                        }
+                        className="w-8 h-8 flex text-center justify-center border border-gray-700 rounded-full text-xl font-medium hover:scale-95"
+                      >
+                        -
+                      </button>
+                      <span className="w-8 text-center text-lg font-medium">
+                        {item.quantity}
+                      </span>
+                      <button
+                        onClick={() =>
+                          handleQuantityChange(item.id, item.quantity + 1)
+                        }
+                        className="w-8 h-8 flex text-center justify-center border border-gray-700 rounded-full text-xl font-medium hover:scale-95"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <button
+                      onClick={() => handleRemove(item.id)}
+                      className="text-black mx-3"
+                    >
+                      X
+                    </button>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
-
-          <Link to="/checkout"
-            id="checkout-button"
-            className="bg-blue-500 text-white px-4 py-2 rounded-md text-center mt-4 w-full"
-          >
-            Checkout
-          </Link>
+          <div className="w-full mb-20 p-4 bg-white shadow-inner border-t">
+            <div className="text-right text-lg font-medium">
+              Total: ${totalAmount.toFixed(2)}
+            </div>
+            <Link
+              to="/checkout"
+              id="checkout-button"
+              className="block bg-black text-white py-2 text-center w-full mt-2"
+            >
+              Checkout
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
 
       {isLoginPopupOpen && (
         <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
