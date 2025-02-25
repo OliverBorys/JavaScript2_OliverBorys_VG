@@ -76,9 +76,9 @@ const Footer = () => {
 
         <div className="flex justify-center mt-8 space-x-6">
           {socialLinks.map((social, index) => (
-            <a
+            <Link
               key={index}
-              href={social.href}
+              to={social.href}
               target="_blank"
               className={`text-[#3b0001] duration-500 hover:scale-140`}
               aria-label={social.label}
@@ -92,7 +92,7 @@ const Footer = () => {
               >
                 {social.icon}
               </svg>
-            </a>
+            </Link>
           ))}
         </div>
 
