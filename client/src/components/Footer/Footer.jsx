@@ -61,7 +61,7 @@ const Footer = () => {
     <footer className="bg-[#f7e0c8] w-full mt-8">
       <div className="px-4 py-12 mx-auto space-y-8 sm:px-6 lg:px-8">
         <nav className="flex flex-wrap justify-center -mx-5 -my-2">
-          {["Shop", "About us", "Contact"].map((item, index) => (
+          {["Shop", "About", "Contact"].map((item, index) => (
             <div key={index} className="px-5 py-2">
               <Link
                 to={`/${item.toLowerCase().replace(" ", "-")}`}
@@ -80,11 +80,12 @@ const Footer = () => {
               key={index}
               href={social.href}
               target="_blank"
-              className={`text-[#3b0001] hover:text-[${social.color}] duration-500 hover:scale-140`}
+              className={`text-[#3b0001] duration-500 hover:scale-140`}
               aria-label={social.label}
+              style={{ "--hover-color": social.color }}
             >
               <svg
-                className="w-7 h-7"
+                className="w-7 h-7 hover:text-[var(--hover-color)]"
                 aria-hidden="true"
                 fill="currentColor"
                 viewBox="0 0 24 24"
