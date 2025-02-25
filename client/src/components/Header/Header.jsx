@@ -271,13 +271,12 @@ const Header = () => {
             Total: <span id="cart-total">0</span>
           </div>
 
-          <a
-            href="/checkout"
+          <Link to="/checkout"
             id="checkout-button"
             className="bg-blue-500 text-white px-4 py-2 rounded-md text-center mt-4 w-full"
           >
             Checkout
-          </a>
+          </Link>
         </div>
       </div>
 

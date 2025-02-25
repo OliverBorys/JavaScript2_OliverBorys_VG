@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
 
 const ProductTable = () => {
   const [products, setProducts] = useState([]);
@@ -55,12 +57,11 @@ const ProductTable = () => {
   return (
     <div>
       <div className="flex justify-end mb-4">
-        <a
-          href="/admin/add-product"
+        <Link to="/admin/add-product"
           className="px-3 py-1 border border-green-600 bg-white text-md text-green-600 hover:bg-green-600 hover:text-white transition-all text-center rounded"
         >
           Add product
-        </a>
+        </Link>
       </div>
 
       <table className="table-auto border-collapse border border-black w-full text-left">
@@ -99,12 +100,11 @@ const ProductTable = () => {
 
               <td className="border border-black">
                 <div className="flex flex-col p-2 sm:px-2 space-y-2">
-                  <a
-                    href={`/admin/edit-product/${product.id}`}
+                  <Link to={`/admin/edit-product/${product.id}`}
                     className="px-2 py-1 border border-blue-500 bg-white text-blue-500 hover:bg-blue-500 hover:text-white transition-all text-center rounded"
                   >
                     Edit
-                  </a>
+                  </Link>
                   <button
                     onClick={() => openDeleteModal(product.id)}
                     className="px-2 py-1 border border-red-500 bg-white text-red-500 hover:bg-red-500 hover:text-white transition-all text-center rounded"

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const ContactTable = () => {
   return (
     <section className="grid grid-cols-3 space-x-3 border-t -mt-4 py-4">
@@ -23,13 +25,12 @@ const ContactTable = () => {
       </div>
       <div className="text-right content-center mr-0">
         {/* Or https://mail.google.com/mail/?view=cm&fs=1&to=example@gmail.com */}
-        <a
-          href="mailto:example@gmail.com"
+        <Link to="mailto:example@gmail.com"
           target="_blank"
           className="inline-block bg-black py-2 px-3 text-white duration-500 hover:scale-90"
         >
           E-mail us
-        </a>
+        </Link>
       </div>
       <div className="col-span-3 mt-2 bg-gray-400 h-[1px] mr-0"></div>
       <div className="col-span-2 mt-4">

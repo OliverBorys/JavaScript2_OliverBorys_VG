@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   toggleLikeProduct,
   isProductLiked,
@@ -25,8 +26,7 @@ const ProductCard = ({ product, onLikeToggle }) => {
   };
 
   return (
-    <a
-      href={`/products/${product.id}`}
+    <Link to={`/products/${product.id}`}
       className="max-w-[300px] w-full p-4 flex flex-col items-center justify-between bg-white rounded-lg shadow-lg hover:shadow-xl transition-all cursor-pointer relative"
     >
       <button
@@ -60,7 +60,7 @@ const ProductCard = ({ product, onLikeToggle }) => {
         <p className="text-sm text-gray-600">{product.brand}</p>
         <p className="text-lg font-semibold text-gray-900">${product.price}</p>
       </div>
-    </a>
+    </Link>
   );
 };
 
