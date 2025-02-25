@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import HomePage from "./pages/HomePage/HomePage";
@@ -16,7 +16,6 @@ import "./index.css";
 
 function App() {
   return (
-    <BrowserRouter>
       <div className="flex flex-col min-h-screen">
         <Header />
 
@@ -42,7 +41,6 @@ function App() {
         </main>
         <Footer />
       </div>
-    </BrowserRouter>
   );
 }
 
