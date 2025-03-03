@@ -43,7 +43,7 @@ const SwiperComponent = () => {
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
-    <div className="px-6 pt-6">
+    <section className="px-6 pt-6">
       <h2 className="text-xl font-bold text-gray-900 mb-4 text-center">
         Related products
       </h2>
@@ -85,7 +85,7 @@ const SwiperComponent = () => {
         ))}
       </Swiper>
       <p className="mt-4 text-gray-500 text-center">← Swipe for more →</p>
-    </div>
+    </section>
   );
 };
 export default SwiperComponent;

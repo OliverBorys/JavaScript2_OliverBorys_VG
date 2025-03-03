@@ -10,11 +10,11 @@ const AdminPage = () => {
   }, []);
 
   return (
-    <main className="mt-30 px-4 md:px-6 md:mx-6 lg:mx-16">
+    <main className="mt-20 lg:mt-24">
       <header className="text-center my-8">
         <h1 className="text-2xl font-medium text-gray-800">Administration</h1>
       </header>
-      <section className="w-full">
+      <section className="px-4 md:px-6 md:mx-6 lg:mx-16">
         <Accordion title="Products Administration">
           <ProductTable />
         </Accordion>

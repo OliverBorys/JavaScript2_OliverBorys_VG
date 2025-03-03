@@ -5,7 +5,7 @@ const ContactAccordion = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="w-full border-b border-gray-900 last:border-b-0">
+    <section className="w-full border-b border-gray-900 last:border-b-0">
       <button
         className="flex justify-between items-center w-full text-gray-900 text-lg font-normal py-5 focus:outline-none"
         onClick={() => setIsOpen(!isOpen)}
@@ -21,7 +21,7 @@ const ContactAccordion = ({ title, children }) => {
           {children}
         </div>
       )}
-    </div>
+    </section>
   );
 };
 

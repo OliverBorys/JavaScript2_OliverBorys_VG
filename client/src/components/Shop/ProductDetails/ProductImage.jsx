@@ -42,7 +42,7 @@ const ProductImage = () => {
   ].filter(Boolean);
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
+    <section className="w-full max-w-2xl mx-auto">
       <div className="block md:mb-6 lg:hidden">
         <Swiper
           modules={[Pagination]}
@@ -73,7 +73,7 @@ const ProductImage = () => {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

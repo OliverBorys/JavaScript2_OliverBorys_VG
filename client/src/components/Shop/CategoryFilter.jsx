@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 const CategoryFilter = ({ categories, selectedCategory, handleCategoryChange }) => {
   return (
-    <div className="w-full">
+    <section className="w-full">
       <div className="sm:hidden flex justify-center gap-4 w-full">
         <select
           value={selectedCategory}
@@ -50,7 +50,7 @@ const CategoryFilter = ({ categories, selectedCategory, handleCategoryChange }) 
           </button>
         ))}
       </nav>
-    </div>
+    </section>
   );
 };
 

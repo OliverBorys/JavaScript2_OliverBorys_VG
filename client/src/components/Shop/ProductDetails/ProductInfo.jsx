@@ -41,7 +41,7 @@ const ProductInfo = ({ onCartUpdate }) => {
   };
   
   return (
-    <div className="w-full max-w-2xl mx-auto p-6 bg-white shadow-lg">
+    <section className="w-full max-w-2xl mx-auto p-6 bg-white shadow-lg">
       <div className="flex justify-between items-center border-b border-gray-300 pb-4 mb-4">
         <h3 className="text-xl font-bold text-gray-900">{product.productName}</h3>
         <span className="text-lg font-medium text-gray-800">${product.price}</span>
@@ -78,7 +78,7 @@ const ProductInfo = ({ onCartUpdate }) => {
       >
         Add to Cart
       </button>
-    </div>
+    </section>
   );
 };
 
