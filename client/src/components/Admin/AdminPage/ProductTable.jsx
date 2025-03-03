@@ -119,8 +119,8 @@ const ProductTable = () => {
       </table>
 
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+        <div className="fixed inset-0 flex items-center justify-center">
+          <div className="bg-white p-6 border-1 border-gray-300 rounded-lg shadow-2xl text-center">
             <h2 className="text-lg font-semibold mb-4">Confirm Delete</h2>
             <p className="mb-4">
               Are you sure you want to delete this product?
