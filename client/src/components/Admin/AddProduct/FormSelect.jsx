@@ -11,7 +11,7 @@ const FormSelect = ({ label, name, value, onChange, options }) => {
         id={name}
         value={value}
         onChange={onChange}
-        className="border p-2 w-full rounded-md"
+        className="border p-2 w-full rounded-md outline-none focus:bg-[#fdf5eb]"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>

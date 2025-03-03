@@ -12,7 +12,7 @@ const FormInput = ({ label, type, name, value, onChange, required }) => {
         id={name}
         value={value}
         onChange={onChange}
-        className="border p-2 w-full rounded-md"
+        className="border p-2 w-full rounded-md outline-none focus:bg-[#fdf5eb]"
         required={required}
       />
     </div>

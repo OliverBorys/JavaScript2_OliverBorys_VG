@@ -11,7 +11,7 @@ const FormTextarea = ({ label, name, value, onChange }) => {
         id={name}
         value={value}
         onChange={onChange}
-        className="border p-2 w-full rounded-md"
+        className="border p-2 w-full rounded-md outline-none focus:bg-[#fdf5eb]"
         rows="4"
       ></textarea>
     </div>
