@@ -35,7 +35,7 @@ const CategoryGrid = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
         <div
           className="relative w-full h-[300px] flex flex-col items-center group cursor-pointer md:col-span-1 sm:place-self-center md:object-center lg:col-span-1"
-          onClick={() => handleCategoryClick("favorites")} // ✅ Handles clicking on "Favorites"
+          onClick={() => handleCategoryClick("favorites")}
         >
           <img
             src="https://images.unsplash.com/photo-1529720317453-c8da503f2051?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // ✅ Add an appropriate image for Favorites

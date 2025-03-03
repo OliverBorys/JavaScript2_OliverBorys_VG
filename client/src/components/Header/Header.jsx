@@ -329,7 +329,6 @@ const Header = () => {
           className="fixed top-14 lg:top-18 right-0 h-full w-full md:w-3/5 bg-white shadow-lg transform transition-transform duration-300 z-40 
     flex flex-col"
         >
-          {/* ✅ Make the cart content scrollable */}
           <div className="p-4 flex-1 overflow-y-auto max-h-[80vh]">
             <h2 className="text-2xl font-bold">Your Cart</h2>
 

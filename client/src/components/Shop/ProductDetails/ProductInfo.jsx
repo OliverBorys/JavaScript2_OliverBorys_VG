@@ -39,7 +39,7 @@ const ProductInfo = ({ onCartUpdate }) => {
     window.dispatchEvent(new Event("cartUpdated"));
     onCartUpdate(true);
   };
-
+  
   return (
     <div className="w-full max-w-2xl mx-auto p-6 bg-white shadow-lg">
       <div className="flex justify-between items-center border-b border-gray-300 pb-4 mb-4">
