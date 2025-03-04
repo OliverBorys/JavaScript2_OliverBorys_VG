@@ -4,6 +4,7 @@ import ProductImage from "../../components/Shop/ProductDetails/ProductImage";
 import ProductInfo from "../../components/Shop/ProductDetails/ProductInfo";
 import Swiper from "../../components/Shop/ProductDetails/Swiper";
 import Header from "../../components/Header/Header";
+import MissingProduct from "../../components/Shop/ProductDetails/MissingProduct";
 
 const ProductDetailsPage = () => {
   const { id } = useParams();
@@ -20,8 +21,12 @@ const ProductDetailsPage = () => {
           `http://localhost:5000/api/products/${id}`
         );
         if (!response.ok) {
+          if (response.status === 404) {
+            throw new Error("Product not found");
+          }
           throw new Error("Failed to fetch product");
         }
+
         const data = await response.json();
         setProduct(data);
         document.title = data.productName;
@@ -42,10 +47,9 @@ const ProductDetailsPage = () => {
   
 
   if (loading) return <p className="text-center text-gray-500">Loading...</p>;
-  if (error) return <p className="text-center text-red-500">{error}</p>;
-  if (!product)
-    return <p className="text-center text-gray-500">Product not found</p>;
 
+  if (error) return <MissingProduct />;
+  
   return (
     <>
       <Header

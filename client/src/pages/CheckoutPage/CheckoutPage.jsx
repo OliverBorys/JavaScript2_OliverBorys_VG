@@ -5,7 +5,7 @@ import ProductGrid from "../../components/Checkout/ProductGrid";
 const CheckoutPage = () => {
   return (
     <div className="checkout-container">
-      <h1 className="text-center text-2xl mt-20 lg:mt-24 mb-6 font-bold">
+      <h1 className="text-center text-2xl mt-20 lg:mt-24 mb-6 font-medium">
         Checkout
       </h1>
       <section className="grid md:grid-cols-5 gap-4 mx-4">
