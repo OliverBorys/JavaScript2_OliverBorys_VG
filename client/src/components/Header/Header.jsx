@@ -38,14 +38,20 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    const handleCartUpdate = () => {
+    const handleCartUpdate = (event) => {
       setCartItems(getCartItems());
-      setCartSidebarOpen(true);
+  
+      const shouldOpenCart = event.detail?.openCart ?? false;
+      
+      if (shouldOpenCart) {
+        setCartSidebarOpen(true);
+      }
     };
-
+  
     window.addEventListener("cartUpdated", handleCartUpdate);
     return () => window.removeEventListener("cartUpdated", handleCartUpdate);
   }, []);
+  
 
   useEffect(() => {
     const handleClickOutside = (event) => {

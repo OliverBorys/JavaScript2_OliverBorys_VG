@@ -20,14 +20,19 @@ const ProductGrid = () => {
   const handleRemove = (productId) => {
     removeFromCart(productId);
     setCartItems(getCartItems());
-    window.dispatchEvent(new Event("cartUpdated"));
+  
+    // Prevent cart from opening
+    window.dispatchEvent(new CustomEvent("cartUpdated", { detail: { openCart: false } }));
   };
-
+  
   const handleQuantityChange = (productId, quantity) => {
     updateCartQuantity(productId, quantity);
     setCartItems(getCartItems());
-    window.dispatchEvent(new Event("cartUpdated"));
+  
+    // Prevent cart from opening
+    window.dispatchEvent(new CustomEvent("cartUpdated", { detail: { openCart: false } }));
   };
+  
 
   const totalAmount = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
