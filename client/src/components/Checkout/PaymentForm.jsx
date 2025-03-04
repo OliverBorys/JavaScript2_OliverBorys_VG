@@ -36,7 +36,7 @@ const PaymentForm = () => {
             type="text"
             name="firstName"
             placeholder="First name"
-            className="p-2 border-r outline-none rounded-tl-lg focus:bg-[#fdf5eb]"
+            className="p-2 border-r outline-none rounded-tl-lg hover:bg-[#fdf5eb] focus:bg-[#fdf5eb]"
             value={formData.firstName}
             onChange={handleChange}
           />
@@ -44,7 +44,7 @@ const PaymentForm = () => {
             type="text"
             name="lastName"
             placeholder="Last name"
-            className="p-2 outline-none rounded-tr-lg focus:bg-[#fdf5eb]"
+            className="p-2 outline-none rounded-tr-lg hover:bg-[#fdf5eb] focus:bg-[#fdf5eb]"
             value={formData.lastName}
             onChange={handleChange}
           />
@@ -53,15 +53,15 @@ const PaymentForm = () => {
           type="email"
           name="email"
           placeholder="Email address"
-          className="w-full p-2 border-b outline-none rounded-tr-lg focus:bg-[#fdf5eb]"
+          className="w-full p-2 border-b outline-none hover:bg-[#fdf5eb] focus:bg-[#fdf5eb]"
           value={formData.email}
           onChange={handleChange}
         />
         <input
           type="tel"
           name="mobilePhone"
-          placeholder="Mobile phone"
-          className="w-full p-2 border-b outline-none rounded-tr-lg focus:bg-[#fdf5eb]"
+          placeholder="Phone number"
+          className="w-full p-2 border-b outline-none hover:bg-[#fdf5eb] focus:bg-[#fdf5eb]"
           value={formData.mobilePhone}
           onChange={handleChange}
         />
@@ -69,7 +69,7 @@ const PaymentForm = () => {
           type="text"
           name="address"
           placeholder="Address"
-          className="w-full p-2 border-b outline-none rounded-tr-lg focus:bg-[#fdf5eb]"
+          className="w-full p-2 border-b outline-none hover:bg-[#fdf5eb] focus:bg-[#fdf5eb]"
           value={formData.address}
           onChange={handleChange}
         />
@@ -77,7 +77,7 @@ const PaymentForm = () => {
           type="text"
           name="city"
           placeholder="City"
-          className="w-full p-2 border-b outline-none rounded-tr-lg focus:bg-[#fdf5eb]"
+          className="w-full p-2 border-b outline-none hover:bg-[#fdf5eb] focus:bg-[#fdf5eb]"
           value={formData.city}
           onChange={handleChange}
         />
@@ -85,7 +85,7 @@ const PaymentForm = () => {
           type="text"
           name="postalCode"
           placeholder="Postal code"
-          className="w-full p-2 outline-none rounded-tr-lg focus:bg-[#fdf5eb]"
+          className="w-full p-2 outline-none rounded-b-lg hover:bg-[#fdf5eb] focus:bg-[#fdf5eb]"
           value={formData.postalCode}
           onChange={handleChange}
         />
@@ -96,7 +96,7 @@ const PaymentForm = () => {
         {["Card", "Swish", "Klarna", "PayPal"].map((method) => (
           <label
             key={method}
-            className="flex items-center justify-between border-b last:border-0 cursor-pointer"
+            className="flex items-center justify-between border-b last:border-0 cursor-pointer hover:bg-[#fdf5eb] first:rounded-t-lg last:rounded-b-lg"
           >
             <div className="p-2 flex items-center space-x-2">
               <input
@@ -105,6 +105,7 @@ const PaymentForm = () => {
                 value={method}
                 checked={formData.paymentMethod === method}
                 onChange={handleChange}
+                className="h-5 w-5"
               />
               <span>Pay with {method}</span>
             </div>
