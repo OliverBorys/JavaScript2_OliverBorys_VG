@@ -210,18 +210,34 @@ const Header = () => {
 
         <div className="hidden lg:flex items-center justify-between w-full">
           <nav className="flex items-center space-x-6">
-            <Link to="/shop" className="text-lg font-medium">
+            <Link
+              to="/shop"
+              className="relative text-lg font-medium leading-6 group block"
+            >
               Shop
+              <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#3b0001] transition-all duration-500 group-hover:w-full"></span>
             </Link>
-            <Link to="/about" className="text-lg font-medium">
+            <Link
+              to="/about"
+              className="relative text-lg font-medium leading-6 group block"
+            >
               About
+              <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#3b0001] transition-all duration-500 group-hover:w-full"></span>
             </Link>
-            <Link to="/contact" className="text-lg font-medium">
+            <Link
+              to="/contact"
+              className="relative text-lg font-medium leading-6 group block"
+            >
               Contact
+              <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#3b0001] transition-all duration-500 group-hover:w-full"></span>
             </Link>
             {isLoggedIn && (
-              <Link to="/admin" className="text-lg font-medium">
+              <Link
+                to="/admin"
+                className="relative text-lg font-medium leading-6 group block"
+              >
                 Administration
+                <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#3b0001] transition-all duration-500 group-hover:w-full"></span>
               </Link>
             )}
           </nav>
