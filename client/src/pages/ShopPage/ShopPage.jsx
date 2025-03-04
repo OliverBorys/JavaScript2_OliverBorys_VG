@@ -1,83 +1,55 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { getLikedProducts } from "../../utils/LocalStorage";
+import useProducts from "../../hooks/useProducts";
+import { filterProducts, sortProducts } from "../../utils/FilterAndSort";
 import CategoryFilter from "../../components/Shop/CategoryFilter";
 import SortDropdown from "../../components/Shop/SortDropdown";
 import ProductGrid from "../../components/Shop/ProductGrid";
+import NoProductsFound from "../../components/Shop/NoProductsFound";
 
-const ShopPage = () => {
-  const [products, setProducts] = useState([]);
-  const [sort, setSort] = useState("newest");
-  const [categories, setCategories] = useState([]);
+const SearchPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get("q") || "";
   const selectedCategory = searchParams.get("category") || "";
+  const [sort, setSort] = useState("newest");
 
-  useEffect(() => {
-    fetch("http://localhost:5000/api/products")
-      .then((res) => res.json())
-      .then((data) => setProducts(data))
-      .catch((error) => console.error("Error fetching products:", error));
+  const { products, categories } = useProducts();
 
-    fetch("http://localhost:5000/api/categories")
-      .then((res) => res.json())
-      .then((data) => setCategories(data))
-      .catch((error) => console.error("Error fetching categories:", error));
-  }, []);
+  const handleCategoryChange = (category) => {
+    setSearchParams((prevParams) => {
+      const newParams = new URLSearchParams(prevParams);
+      if (category) {
+        newParams.set("category", category.toLowerCase());
+      } else {
+        newParams.delete("category");
+      }
+      return newParams;
+    });
+  };
 
   const handleSortChange = (value) => setSort(value);
 
-  const handleCategoryChange = (category) => {
-    setSearchParams(category ? { category } : {});
-  };
-
-  const handleLikeToggle = () => {
-    setProducts([...products]);
-  };
-
-  const filteredProducts = products.filter((product) => {
-    if (selectedCategory === "favorites") {
-      const likedProducts = getLikedProducts();
-      return likedProducts.includes(product.id);
-    }
-    return selectedCategory ? product.categoryName.toLowerCase() === selectedCategory.toLowerCase() : true;
-  });
-
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
-    if (sort === "newest") return new Date(b.publishingDate) - new Date(a.publishingDate);
-    if (sort === "oldest") return new Date(a.publishingDate) - new Date(b.publishingDate);
-    if (sort === "highest") return b.price - a.price;
-    if (sort === "lowest") return a.price - b.price;
-    return 0;
-  });
-
-  useEffect(() => {
-    document.title = "Shop";
-  }, []);
+  const filteredProducts = filterProducts(products, query, selectedCategory);
+  const sortedProducts = sortProducts(filteredProducts, sort);
 
   return (
     <main className="py-10 flex-grow">
-      <section className="container mx-auto px-4 pt-12">
+      <section className="container mx-auto px-4 pt-20">
         <header className="text-center my-8">
-          <h1 className="text-2xl font-medium text-gray-800">Shop</h1>
+          <h1 className="text-2xl font-medium text-gray-800">
+            {query ? `Search results: ${query}` : "Shop"}
+          </h1>
         </header>
 
-        <div className="flex flex-row gap-4 mb-4 place-self-center sm:place-self-auto sm:flex-col">
-          <div>
-            <CategoryFilter
-              categories={categories}
-              selectedCategory={selectedCategory}
-              handleCategoryChange={handleCategoryChange}
-            />
-          </div>
-          <div className="">
-            <SortDropdown sort={sort} handleSortChange={handleSortChange} />
-          </div>
+        <div className="flex flex-row gap-4 mb-4 sm:flex-col">
+          <CategoryFilter categories={categories} selectedCategory={selectedCategory} handleCategoryChange={handleCategoryChange} />
+          <SortDropdown sort={sort} handleSortChange={handleSortChange} />
         </div>
 
-        <ProductGrid products={sortedProducts} onLikeToggle={handleLikeToggle} />
+        {sortedProducts.length > 0 ? <ProductGrid products={sortedProducts} /> : <NoProductsFound message={`No products found for "${query}"`} />}
       </section>
     </main>
   );
 };
 
-export default ShopPage;
+export default SearchPage;
