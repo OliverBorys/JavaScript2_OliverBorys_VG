@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { addToCart } from "../../../utils/LocalStorage";
 import PropTypes from "prop-types";
+import ProductInfoAccordion from "./ProductInfoAccordion";
 
 const ProductInfo = ({ onCartUpdate }) => {
   const { id } = useParams();
@@ -83,9 +84,11 @@ const ProductInfo = ({ onCartUpdate }) => {
           ))}
         </div>
       </div>
-
+      <ProductInfoAccordion title="Product Description">
+        {product.productDescription || "No description available."}
+      </ProductInfoAccordion>
       <button
-        className="w-full bg-black text-white font-medium py-3 hover:scale-95 transition"
+        className="w-full mt-6 bg-black text-white font-medium py-3 hover:scale-95 transition"
         onClick={handleAddToCart}
       >
         Add to Cart
@@ -95,6 +98,7 @@ const ProductInfo = ({ onCartUpdate }) => {
 };
 
 ProductInfo.propTypes = {
+  product: PropTypes.object,
   onCartUpdate: PropTypes.func.isRequired,
 };
 
