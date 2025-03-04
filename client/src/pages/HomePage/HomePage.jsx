@@ -1,43 +1,18 @@
+import useFetch from "../../hooks/useFetch";
 import AboutFindUs from "../../components/Home/AboutFindUs";
 import CategoryGrid from "../../components/Home/CategoryGrid";
 import HeroSection from "../../components/Home/HeroSection";
 import ProductGrid from "../../components/Shop/ProductGrid";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const HomePage = () => {
-  const [trendingProducts, setTrendingProducts] = useState([]);
-  const [products, setProducts] = useState([]);
+  const { data: products, loading, error } = useFetch("http://localhost:5000/api/products");
 
-  useEffect(() => {
-    const fetchTrendingProducts = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/products");
-        if (!res.ok) throw new Error("Failed to fetch products.");
-
-        const data = await res.json();
-        const filteredProducts = data.filter(
-          (p) => p.isNew.toLowerCase() === "yes"
-        );
-
-        // Shuffle and take 4 products (Fisher-Yates Algorithm)
-        const shuffled = filteredProducts
-          .map((p) => ({ p, sort: Math.random() })) // Assign random values
-          .sort((a, b) => a.sort - b.sort) // Sort randomly
-          .map(({ p }) => p) // Extract products
-          .slice(0, 4); // Take only 4
-
-        setTrendingProducts(shuffled);
-      } catch (error) {
-        console.error(error.message);
-      }
-    };
-
-    fetchTrendingProducts();
-  }, []);
-
-  const handleLikeToggle = () => {
-    setProducts([...products]);
-  };
+  const trendingProducts = products
+    ? products.filter((p) => p.isNew.toLowerCase() === "yes")
+        .sort(() => Math.random() - 0.5) // Shuffle
+        .slice(0, 4) // Take 4 items
+    : [];
 
   useEffect(() => {
     document.title = "Home";
@@ -46,16 +21,12 @@ const HomePage = () => {
   return (
     <main>
       <HeroSection />
-
       <section className="py-10">
         <div className="container mx-auto px-4">
-          <h2 className="text-center text-2xl font-bold mb-6">
-            What&rsquo;s Trending Now
-          </h2>
-          <ProductGrid products={trendingProducts} onLikeToggle={handleLikeToggle} />
+          <h2 className="text-center text-2xl font-bold mb-6">What’s Trending Now</h2>
+          {loading ? <p>Loading trending products...</p> : error ? <p>{error}</p> : <ProductGrid products={trendingProducts} />}
         </div>
       </section>
-
       <section className="py-10 mx-10 sm:mx-15 lg:mx-8">
         <div className="mb-10">
           <CategoryGrid />
