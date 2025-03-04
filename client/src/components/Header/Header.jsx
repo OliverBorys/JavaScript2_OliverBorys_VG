@@ -40,18 +40,17 @@ const Header = () => {
   useEffect(() => {
     const handleCartUpdate = (event) => {
       setCartItems(getCartItems());
-  
+
       const shouldOpenCart = event.detail?.openCart ?? false;
-      
+
       if (shouldOpenCart) {
         setCartSidebarOpen(true);
       }
     };
-  
+
     window.addEventListener("cartUpdated", handleCartUpdate);
     return () => window.removeEventListener("cartUpdated", handleCartUpdate);
   }, []);
-  
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -332,8 +331,8 @@ const Header = () => {
       {isCartSidebarOpen && (
         <div
           ref={cartRef}
-          className="fixed top-14 lg:top-18 right-0 h-full w-full md:w-3/5 bg-white shadow-lg transform transition-transform duration-300 z-40 
-    flex flex-col"
+          className="fixed top-14 lg:top-18 right-0 h-full w-full sm:w-3/5 bg-white shadow-lg transform transition-transform duration-300 z-40 
+          flex flex-col"
         >
           <div className="p-4 flex-1 overflow-y-auto max-h-[80vh]">
             <h2 className="text-2xl font-bold">Your Cart</h2>
@@ -345,19 +344,21 @@ const Header = () => {
                 cartItems.map((item) => (
                   <div
                     key={item.id}
-                    className="flex justify-between items-center border-b py-2"
+                    className="flex flex-col max-[424px]:flex-col min-[425px]:flex-row justify-between items-center border-b py-2"
                   >
-                    <img
-                      src={item.image}
-                      alt={item.productName}
-                      className="w-20 h-20 object-contain"
-                    />
-                    <div className="flex-1 ml-4">
-                      <h3 className="font-medium">{item.productName}</h3>
-                      <p className="text-sm text-gray-500">{item.brand}</p>
-                      <p>${item.price}</p>
-                    </div>
-                    <div className="flex items-center">
+                    <Link to={`/products/${item.id}`} className="flex">
+                      <img
+                        src={item.image}
+                        alt={item.productName}
+                        className="w-20 h-20 object-contain"
+                      />
+                      <div className="flex-1 ml-4">
+                        <h3 className="font-medium">{item.productName}</h3>
+                        <p className="text-sm text-gray-500">{item.brand}</p>
+                        <p>${item.price}</p>
+                      </div>
+                    </Link>
+                    <div className="flex items-center my-2 sm:my-0">
                       <button
                         onClick={() =>
                           handleQuantityChange(item.id, item.quantity - 1)
@@ -377,13 +378,13 @@ const Header = () => {
                       >
                         +
                       </button>
+                      <button
+                        onClick={() => handleRemove(item.id)}
+                        className="text-red-500 font-medium hover:text-red-700 mx-2 sm:mt-0"
+                      >
+                        Remove
+                      </button>
                     </div>
-                    <button
-                      onClick={() => handleRemove(item.id)}
-                      className="text-black mx-3"
-                    >
-                      X
-                    </button>
                   </div>
                 ))
               )}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   getCartItems,
   removeFromCart,
@@ -20,19 +21,20 @@ const ProductGrid = () => {
   const handleRemove = (productId) => {
     removeFromCart(productId);
     setCartItems(getCartItems());
-  
-    // Prevent cart from opening
-    window.dispatchEvent(new CustomEvent("cartUpdated", { detail: { openCart: false } }));
+
+    window.dispatchEvent(
+      new CustomEvent("cartUpdated", { detail: { openCart: false } })
+    );
   };
-  
+
   const handleQuantityChange = (productId, quantity) => {
     updateCartQuantity(productId, quantity);
     setCartItems(getCartItems());
-  
-    // Prevent cart from opening
-    window.dispatchEvent(new CustomEvent("cartUpdated", { detail: { openCart: false } }));
+
+    window.dispatchEvent(
+      new CustomEvent("cartUpdated", { detail: { openCart: false } })
+    );
   };
-  
 
   const totalAmount = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -42,13 +44,16 @@ const ProductGrid = () => {
   return (
     <section>
       {cartItems.length === 0 ? (
-        <p className="p-4 text-center font-medium text-lg">Your cart is empty</p>
+        <p className="p-4 text-center font-medium text-lg">
+          Your cart is empty
+        </p>
       ) : (
         cartItems.map((item) => (
           <div
             key={item.id}
             className="flex flex-col max-[424px]:flex-col min-[425px]:flex-row justify-between items-center border-b py-2"
           >
+            <Link to={`/products/${item.id}`} className="flex">
             <img
               src={item.image}
               alt={item.productName}
@@ -60,8 +65,9 @@ const ProductGrid = () => {
               <p className="text-sm text-gray-500">{item.brand}</p>
               <p>${item.price}</p>
             </div>
+            </Link>
 
-            <div className="flex items-center">
+            <div className="flex items-center my-2 sm:my-0">
               <button
                 onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
                 className="w-8 h-8 flex text-center justify-center border border-gray-700 rounded-full text-xl font-medium hover:scale-95"
@@ -77,14 +83,14 @@ const ProductGrid = () => {
               >
                 +
               </button>
-            </div>
 
-            <button
-              onClick={() => handleRemove(item.id)}
-              className="text-red-500 font-medium hover:text-red-700 mx-2 sm:mt-0"
-            >
-              Remove
-            </button>
+              <button
+                onClick={() => handleRemove(item.id)}
+                className="text-red-500 font-medium hover:text-red-700 mx-2 sm:mt-0"
+              >
+                Remove
+              </button>
+            </div>
           </div>
         ))
       )}
