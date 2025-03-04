@@ -24,7 +24,7 @@ export const toggleLikeProduct = (productId) => {
   return likedProducts;
 };
 
-const CART_UPDATED_EVENT = "cartUpdated";
+const cartUpdatedEvent = "cartUpdated";
 
 export const getCartItems = () => {
   return JSON.parse(localStorage.getItem("cartItems")) || [];
@@ -32,7 +32,7 @@ export const getCartItems = () => {
 
 export const saveCartItems = (cartItems, openCart = true) => {
   localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  window.dispatchEvent(new CustomEvent(CART_UPDATED_EVENT, { detail: { openCart } }));
+  window.dispatchEvent(new CustomEvent(cartUpdatedEvent, { detail: { openCart } }));
 };
 
 export const addToCart = (product) => {
