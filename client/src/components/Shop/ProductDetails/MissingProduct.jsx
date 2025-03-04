@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getCartItems, saveCartItems } from "../../../utils/LocalStorage";
 
@@ -6,26 +6,20 @@ const MissingProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (id) {
-      removeMissingProductFromCart(id);
-    }
-  }, [id]);
-
-  const removeMissingProductFromCart = (productId) => {
+  const removeMissingProductFromCart = useCallback((productId) => {
     let cartItems = getCartItems();
-    
     const updatedCart = cartItems.filter((item) => item.id !== parseInt(productId));
 
     if (cartItems.length !== updatedCart.length) {
       saveCartItems(updatedCart, false);
-      
       window.dispatchEvent(new CustomEvent("cartUpdated", { detail: { openCart: false } }));
       console.log(`Removed product ${productId} from cart.`);
-    } else {
-      console.log(`Product ${productId} not found in cart.`);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (id) removeMissingProductFromCart(id);
+  }, [id, removeMissingProductFromCart]);
 
   return (
     <div className="text-center mt-20 lg:mt-24">
