@@ -38,11 +38,9 @@ const SearchPage = () => {
   return (
     <main className="py-10 flex-grow">
       <section className="container mx-auto px-4 pt-20">
-        <header className="text-center my-8">
-          <h1 className="text-2xl font-medium text-gray-800">
+          <h1 className="text-center my-8 text-2xl font-medium text-gray-800">
             {query ? `Search results: ${query}` : "Shop"}
           </h1>
-        </header>
 
         <div className="flex flex-row gap-4 mb-4 sm:flex-col">
           <CategoryFilter categories={categories} selectedCategory={selectedCategory} handleCategoryChange={handleCategoryChange} />
