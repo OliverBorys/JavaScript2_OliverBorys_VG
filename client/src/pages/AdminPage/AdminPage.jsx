@@ -11,9 +11,7 @@ const AdminPage = () => {
 
   return (
     <main className="mt-20 lg:mt-24">
-      <header className="text-center my-8">
-        <h1 className="text-2xl font-medium text-gray-800">Administration</h1>
-      </header>
+        <h1 className="text-center my-8 text-2xl font-medium text-gray-800">Administration</h1>
       <section className="px-4 md:px-6 md:mx-6 lg:mx-16">
         <Accordion title="Products Administration">
           <ProductTable />
