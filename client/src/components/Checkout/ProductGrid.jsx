@@ -1,45 +1,8 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  getCartItems,
-  removeFromCart,
-  updateCartQuantity,
-} from "../../utils/LocalStorage";
+import useCart from "../../hooks/useCart";
 
 const ProductGrid = () => {
-  const [cartItems, setCartItems] = useState(getCartItems());
-
-  useEffect(() => {
-    const handleCartUpdate = () => {
-      setCartItems(getCartItems());
-    };
-
-    window.addEventListener("cartUpdated", handleCartUpdate);
-    return () => window.removeEventListener("cartUpdated", handleCartUpdate);
-  }, []);
-
-  const handleRemove = (productId) => {
-    removeFromCart(productId);
-    setCartItems(getCartItems());
-
-    window.dispatchEvent(
-      new CustomEvent("cartUpdated", { detail: { openCart: false } })
-    );
-  };
-
-  const handleQuantityChange = (productId, quantity) => {
-    updateCartQuantity(productId, quantity);
-    setCartItems(getCartItems());
-
-    window.dispatchEvent(
-      new CustomEvent("cartUpdated", { detail: { openCart: false } })
-    );
-  };
-
-  const totalAmount = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
+  const {cartItems, handleRemove, handleQuantityChange} = useCart();
 
   return (
     <section>
@@ -96,7 +59,7 @@ const ProductGrid = () => {
       )}
       <div className="p-4 pb-2">
         <div className="text-right text-lg font-medium">
-          Total: ${totalAmount.toFixed(2)}
+        Total: ${cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}
         </div>
       </div>
     </section>
