@@ -28,12 +28,14 @@ const SearchPage = () => {
       return newParams;
     });
   };
-  
 
   const handleSortChange = (value) => setSort(value);
 
   const filteredProducts = filterProducts(products, query, selectedCategory);
   const sortedProducts = sortProducts(filteredProducts, sort);
+
+  const handleLikeToggle = () => {
+  };
 
   return (
     <main className="py-10 flex-grow">
@@ -49,7 +51,7 @@ const SearchPage = () => {
           <SortDropdown sort={sort} handleSortChange={handleSortChange} />
         </div>
 
-        {sortedProducts.length > 0 ? <ProductGrid products={sortedProducts} /> : <NoProductsFound message="No products found" />}
+        {sortedProducts.length > 0 ? <ProductGrid products={sortedProducts} onLikeToggle={handleLikeToggle} /> : <NoProductsFound message="No products found" />}
       </section>
     </main>
   );
