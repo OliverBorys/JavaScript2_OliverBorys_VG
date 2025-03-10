@@ -18,13 +18,13 @@ const SearchPage = () => {
   const handleCategoryChange = (category) => {
     setSearchParams((prevParams) => {
       const newParams = new URLSearchParams(prevParams);
-      
+
       if (category) {
         newParams.set("category", category.toLowerCase());
       } else {
         newParams.delete("category");
       }
-  
+
       return newParams;
     });
   };
@@ -34,22 +34,32 @@ const SearchPage = () => {
   const filteredProducts = filterProducts(products, query, selectedCategory);
   const sortedProducts = sortProducts(filteredProducts, sort);
 
-  const handleLikeToggle = () => {
-  };
+  const handleLikeToggle = () => {};
 
   return (
     <main className="py-10 flex-grow">
       <section className="container mx-auto px-4 pt-20">
-          <h1 className="text-center my-8 text-2xl font-medium text-gray-800">
-            {query ? `Search results: ${query}` : "Shop"}
-          </h1>
+        <h1 className="text-center my-8 text-2xl font-medium text-gray-800">
+          {query ? `Search results: ${query}` : "Shop"}
+        </h1>
 
         <div className="flex flex-row gap-4 mb-4 sm:flex-col">
-          <CategoryFilter categories={categories} selectedCategory={selectedCategory} handleCategoryChange={handleCategoryChange} />
+          <CategoryFilter
+            categories={categories}
+            selectedCategory={selectedCategory}
+            handleCategoryChange={handleCategoryChange}
+          />
           <SortDropdown sort={sort} handleSortChange={handleSortChange} />
         </div>
 
-        {sortedProducts.length > 0 ? <ProductGrid products={sortedProducts} onLikeToggle={handleLikeToggle} /> : <NoProductsFound message="No products found" />}
+        {sortedProducts.length > 0 ? (
+          <ProductGrid
+            products={sortedProducts}
+            onLikeToggle={handleLikeToggle}
+          />
+        ) : (
+          <NoProductsFound query={query} />
+        )}
       </section>
     </main>
   );
