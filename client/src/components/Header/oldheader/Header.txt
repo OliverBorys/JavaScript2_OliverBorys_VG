@@ -1,0 +1,87 @@
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import logoWhite from "/images/logo-white.svg";
+import logoBlack from "/images/logo.svg";
+import HeaderCart from "./HeaderCart";
+import HeaderLogin from "./HeaderLogin";
+import HeaderSidebar from "./HeaderSidebar";
+
+const Header = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isScrolled, setScrolled] = useState(false);
+  const [isHovered, setHovered] = useState(false);
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isCartOpen, setCartOpen] = useState(false);
+
+  const location = useLocation();
+
+  const isTransparentPage =
+    location.pathname === "/" || location.pathname === "/about";
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const isHeaderWhite =
+    !isTransparentPage ||
+    isScrolled ||
+    isHovered ||
+    isCartOpen ||
+    isSidebarOpen;
+
+  return (
+    <header
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        isHeaderWhite ? "bg-white text-black" : "bg-transparent text-white"
+      }`}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <section className="flex items-center justify-between px-10 py-4">
+        <HeaderSidebar
+          isLoggedIn={isLoggedIn}
+          setSidebarOpen={setSidebarOpen}
+        />
+
+        <div className="absolute left-1/2 transform -translate-x-1/2">
+          <Link to="/">
+            <img
+              src={isHeaderWhite ? logoBlack : logoWhite}
+              alt="Logo"
+              className="h-10"
+            />
+          </Link>
+        </div>
+
+        <div className="flex items-center space-x-4">
+        <div className="search-container hidden lg:block w-48">
+            <form
+              action="/search"
+              method="GET"
+              className="search-input rounded-lg"
+            >
+              <input
+                type="text"
+                name="q"
+                placeholder="Search..."
+                className="w-full px-4 py-2 border-1 rounded-lg focus:outline-none text-black"
+              />
+            </form>
+          </div>
+          <HeaderLogin
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+            isHeaderWhite={isHeaderWhite}
+          />
+          <HeaderCart isHeaderWhite={isHeaderWhite} setCartOpen={setCartOpen} />
+        </div>
+      </section>
+    </header>
+  );
+};
+
+export default Header;

@@ -1,0 +1,152 @@
+import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+
+const HeaderSidebar = ({ isLoggedIn, setSidebarOpen }) => {
+  const [isSidebarOpen, setLocalSidebarOpen] = useState(false);
+  const sidebarRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setLocalSidebarOpen(false);
+        setSidebarOpen(false);
+      }
+    };
+
+    if (isSidebarOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isSidebarOpen, setSidebarOpen]);
+
+  const toggleSidebar = () => {
+    const newState = !isSidebarOpen;
+    setLocalSidebarOpen(newState);
+    setSidebarOpen(newState);
+  };
+
+  return (
+    <section>
+      <button
+        className="lg:hidden grid item-center z-50"
+        onMouseDown={(e) => {
+          e.stopPropagation();
+          toggleSidebar();
+        }}
+      >
+        <div
+          className={`w-6 h-0.5 mb-1.5 bg-current transition-all duration-300 ${
+            isSidebarOpen ? "rotate-45 translate-y-2" : ""
+          }`}
+        />
+        <div
+          className={`w-6 h-0.5 bg-current transition-opacity duration-300 ${
+            isSidebarOpen ? "opacity-0" : ""
+          }`}
+        />
+        <div
+          className={`w-6 h-0.5 mt-1.5 bg-current transition-all duration-300 ${
+            isSidebarOpen ? "-rotate-45 -translate-y-2" : ""
+          }`}
+        />
+      </button>
+
+      <nav className="hidden lg:flex items-center space-x-6">
+        <Link
+          to="/shop"
+          className="relative text-lg font-medium leading-6 group block"
+        >
+          Shop
+          <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#3b0001] transition-all duration-500 group-hover:w-full"></span>
+        </Link>
+        <Link
+          to="/about"
+          className="relative text-lg font-medium leading-6 group block"
+        >
+          About
+          <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#3b0001] transition-all duration-500 group-hover:w-full"></span>
+        </Link>
+        <Link
+          to="/contact"
+          className="relative text-lg font-medium leading-6 group block"
+        >
+          Contact
+          <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#3b0001] transition-all duration-500 group-hover:w-full"></span>
+        </Link>
+        {isLoggedIn && (
+          <Link
+            to="/admin"
+            className="relative text-lg font-medium leading-6 group block"
+          >
+            Administration
+            <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#3b0001] transition-all duration-500 group-hover:w-full"></span>
+          </Link>
+        )}
+      </nav>
+
+      <div
+        ref={sidebarRef}
+        className={`lg:hidden fixed top-14 lg:top-18 left-0 h-full w-full sm:w-1/3 text-black bg-white transform ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } transition-transform duration-300 z-40 shadow-lg`}
+      >
+        <ul className="mt-4 space-y-4 px-4">
+          <li>
+            <div className="search-container">
+              <form action="/search" method="GET" className="search-input">
+                <input
+                  type="text"
+                  name="q"
+                  placeholder="Search..."
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none text-black"
+                />
+              </form>
+            </div>
+          </li>
+          <li>
+            <Link
+              to="/shop"
+              className="text-lg font-medium"
+              onClick={toggleSidebar}
+            >
+              Shop
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/about"
+              className="text-lg font-medium"
+              onClick={toggleSidebar}
+            >
+              About
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/contact"
+              className="text-lg font-medium"
+              onClick={toggleSidebar}
+            >
+              Contact
+            </Link>
+          </li>
+          <li>
+            {isLoggedIn && (
+              <Link to="/admin" className="text-lg font-medium">
+                Administration
+              </Link>
+            )}
+          </li>
+        </ul>
+      </div>
+    </section>
+  );
+};
+
+HeaderSidebar.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+  setSidebarOpen: PropTypes.bool.isRequired,
+};
+
+export default HeaderSidebar;

@@ -1,0 +1,133 @@
+import { useState, useEffect, useRef } from "react";
+import loginWhite from "/images/login-white.svg";
+import loginBlack from "/images/login.svg";
+import PropTypes from "prop-types";
+
+const HeaderLogin = ({ isLoggedIn, setIsLoggedIn, isHeaderWhite }) => {
+  const [isLoginPopupOpen, setLoginPopupOpen] = useState(false);
+  const loginPopupRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        isLoginPopupOpen &&
+        loginPopupRef.current &&
+        !loginPopupRef.current.contains(event.target)
+      ) {
+        setLoginPopupOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isLoginPopupOpen]);
+
+
+  const toggleLoginPopup = () => {
+    setLoginPopupOpen(!isLoginPopupOpen);
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    setIsLoggedIn(true);
+    setLoginPopupOpen(false);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
+
+  return (
+    <section">
+      <button
+        onMouseDown={(e) => {
+          e.stopPropagation();
+          toggleLoginPopup();
+        }}
+      >
+        <img
+          src={isHeaderWhite ? loginBlack : loginWhite}
+          alt="Login"
+          className="h-6"
+        />
+      </button>
+
+      {isLoginPopupOpen && (
+        <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+          <div
+            ref={loginPopupRef}
+            className="bg-white p-8 rounded-lg shadow-lg text-center relative"
+          >
+            <button
+              className="absolute top-2 right-2 text-gray-500 hover:text-black text-3xl"
+              onClick={toggleLoginPopup}
+            >
+              &times;
+            </button>
+            {!isLoggedIn ? (
+              <>
+                <h2 className="text-2xl font-semibold mb-4">
+                  Please enter your login details below
+                </h2>
+                <form
+                  onSubmit={handleLogin}
+                  className="flex flex-col text-left"
+                >
+                  <label className="text-lg" htmlFor="username">
+                    Username:
+                  </label>
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    required
+                    autoComplete="username"
+                    className="p-1 border border-black rounded focus:outline-none focus:border-blue-500"
+                  />
+
+                  <label className="text-lg mt-2" htmlFor="password">
+                    Password:
+                  </label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    autoComplete="current-password"
+                    className="p-1 border border-black rounded focus:outline-none focus:border-blue-500"
+                  />
+
+                  <button
+                    type="submit"
+                    className="px-8 py-3 mt-4 border border-black bg-white hover:bg-black hover:text-white transition-all text-center"
+                  >
+                    Sign In
+                  </button>
+                </form>
+              </>
+            ) : (
+              <>
+                <h2 className="text-2xl font-semibold mb-4">
+                  You’re already signed in
+                </h2>
+                <button
+                  onClick={handleLogout}
+                  className="px-8 py-3 border border-red-500 bg-white text-red-500 hover:bg-red-500 hover:text-white transition-all text-center rounded"
+                >
+                  Sign Out
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+    </section>
+  );
+};
+
+HeaderLogin.propTypes = {
+    isLoggedIn: PropTypes.bool.isRequired,
+    setIsLoggedIn: PropTypes.func.isRequired,
+    isHeaderWhite: PropTypes.bool.isRequired,
+  };
+
+export default HeaderLogin;

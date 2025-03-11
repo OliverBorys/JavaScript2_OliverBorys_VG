@@ -24,15 +24,16 @@ export const toggleLikeProduct = (productId) => {
   return likedProducts;
 };
 
-const cartUpdatedEvent = "cartUpdated";
+
+const CART_UPDATED_EVENT = "cartUpdated";
 
 export const getCartItems = () => {
   return JSON.parse(localStorage.getItem("cartItems")) || [];
 };
 
-export const saveCartItems = (cartItems, openCart = true) => {
+export const saveCartItems = (cartItems, openCart = false) => {
   localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  window.dispatchEvent(new CustomEvent(cartUpdatedEvent, { detail: { openCart } }));
+  window.dispatchEvent(new CustomEvent(CART_UPDATED_EVENT, { detail: { openCart } }));
 };
 
 export const addToCart = (product) => {
@@ -45,15 +46,13 @@ export const addToCart = (product) => {
     cartItems.push({ ...product, quantity: 1 });
   }
 
-  saveCartItems(cartItems, true);
-};
-
-
-export const removeFromCart = (productId) => {
-  let cartItems = getCartItems().filter((item) => item.id !== productId);
   saveCartItems(cartItems, false);
 };
 
+export const removeFromCart = (productId) => {
+  let cartItems = getCartItems().filter((item) => item.id !== productId);
+  saveCartItems(cartItems, true);
+};
 
 export const updateCartQuantity = (productId, quantity) => {
   let cartItems = getCartItems().map((item) =>
@@ -62,8 +61,8 @@ export const updateCartQuantity = (productId, quantity) => {
   saveCartItems(cartItems, false);
 };
 
-
 export const clearCart = () => {
   localStorage.removeItem("cartItems"); 
-  window.dispatchEvent(new CustomEvent("cartUpdated", { detail: { openCart: true } }));
+  saveCartItems([], true);
 };
+
