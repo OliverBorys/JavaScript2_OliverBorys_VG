@@ -34,8 +34,9 @@ const SearchPage = () => {
 
   const handleSortChange = (value) => setSort(value);
 
-  const filteredProducts = filterProducts(products, query, selectedCategory);
+  const filteredProducts = filterProducts(Array.isArray(products) ? products : [], query, selectedCategory);
   const sortedProducts = sortProducts(filteredProducts, sort);
+  
 
   const handleLikeToggle = () => {};
 
