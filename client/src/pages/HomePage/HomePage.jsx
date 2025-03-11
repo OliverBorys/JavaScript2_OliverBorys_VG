@@ -1,17 +1,19 @@
-import useFetch from "../../hooks/useFetch";
+import { useEffect } from "react";
+import useApi from "../../hooks/useApi";
 import AboutFindUs from "../../components/Home/AboutFindUs";
 import CategoryGrid from "../../components/Home/CategoryGrid";
 import HeroSection from "../../components/Home/HeroSection";
 import ProductGrid from "../../components/Shop/ProductGrid";
-import { useEffect } from "react";
 
 const HomePage = () => {
-  const { data: products, loading, error } = useFetch("http://localhost:5000/api/products");
+  const { data: products, loading, error } = useApi({
+    url: "http://localhost:5000/api/products"
+  });
 
   const trendingProducts = products
     ? products.filter((p) => p.isNew.toLowerCase() === "yes")
-        .sort(() => Math.random() - 0.5) // Shuffle
-        .slice(0, 4) // Take 4 items
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 4)
     : [];
 
   useEffect(() => {
@@ -22,7 +24,7 @@ const HomePage = () => {
   };
 
   return (
-    <main>
+<main>
       <HeroSection />
       <section className="py-10">
         <div className="container mx-auto px-4">

@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
-import useProducts from "../../../hooks/useProducts";
+import useApi from "../../../hooks/useApi";
 
 const ProductTable = () => {
-  const { state, dispatch, deleteProduct } = useProducts();
+  const { data: products, loading, error, deleteItem, dispatch, isModalOpen, deleteProductId } = useApi({
+    url: "http://localhost:5000/api/products"
+  });
 
   return (
     <div>
@@ -15,8 +17,8 @@ const ProductTable = () => {
         </Link>
       </div>
 
-      {state.loading && <p>Loading products...</p>}
-      {state.error && <p className="text-red-500">{state.error}</p>}
+      {loading && <p>Loading products...</p>}
+      {error && <p className="text-red-500">{error}</p>}
 
       <table className="table-auto border-collapse border border-black w-full text-left">
         <thead>
@@ -29,7 +31,7 @@ const ProductTable = () => {
           </tr>
         </thead>
         <tbody>
-          {state.products.map((product) => (
+          {products && products.map((product) => (
             <tr key={product.id}>
               <td className="border border-black px-4 py-2 text-center hidden sm:table-cell">{product.id}</td>
               <td className="border border-black px-4 py-2">{product.productName}</td>
@@ -58,16 +60,22 @@ const ProductTable = () => {
         </tbody>
       </table>
 
-      {state.isModalOpen && (
+      {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center">
           <div className="bg-white p-6 border-1 border-gray-300 rounded-lg shadow-2xl text-center">
             <h2 className="text-lg font-semibold mb-4">Confirm Delete</h2>
             <p className="mb-4">Are you sure you want to delete this product?</p>
             <div className="flex justify-center space-x-4">
-              <button onClick={() => deleteProduct(state.deleteProductId)} className="px-2 py-1 border border-red-600 bg-white text-red-600 hover:bg-red-600 hover:text-white transition-all text-center rounded">
+              <button 
+                onClick={() => deleteItem(deleteProductId)} 
+                className="px-2 py-1 border border-red-600 bg-white text-red-600 hover:bg-red-600 hover:text-white transition-all text-center rounded"
+              >
                 Yes, Delete
               </button>
-              <button onClick={() => dispatch({ type: "CLOSE_DELETE_MODAL" })} className="px-2 py-1 border border-gray-600 bg-white text-gray-600 hover:bg-gray-600 hover:text-white transition-all text-center rounded">
+              <button 
+                onClick={() => dispatch({ type: "CLOSE_DELETE_MODAL" })} 
+                className="px-2 py-1 border border-gray-600 bg-white text-gray-600 hover:bg-gray-600 hover:text-white transition-all text-center rounded"
+              >
                 Cancel
               </button>
             </div>

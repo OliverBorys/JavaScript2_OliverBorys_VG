@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import useProducts from "../../hooks/useProducts";
+import useApi from "../../hooks/useApi";
 import { filterProducts, sortProducts } from "../../utils/FilterAndSort";
 import CategoryFilter from "../../components/Shop/CategoryFilter";
 import SortDropdown from "../../components/Shop/SortDropdown";
@@ -11,9 +11,12 @@ const SearchPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("q") || "";
   const selectedCategory = searchParams.get("category") || "";
-
-  const { products, categories } = useProducts();
   const [sort, setSort] = useState("newest");
+
+  const { data: products, categories } = useApi({
+    url: "http://localhost:5000/api/products",
+    withCategories: true
+  });
 
   const handleCategoryChange = (category) => {
     setSearchParams((prevParams) => {

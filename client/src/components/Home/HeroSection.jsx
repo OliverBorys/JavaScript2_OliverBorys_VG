@@ -1,8 +1,10 @@
-import useFetch from "../../hooks/useFetch";
+import useApi from "../../hooks/useApi";
 import { Link } from "react-router-dom";
 
 const HeroSection = () => {
-  const { data: heroImages, loading, error } = useFetch("http://localhost:5000/api/hero-images");
+  const { data: heroImages, loading, error } = useApi({
+    url: "http://localhost:5000/api/hero-images"
+  });
 
   if (loading) return <p>Loading hero images...</p>;
   if (error) return <p>Error loading images</p>;
