@@ -44,7 +44,7 @@ const HeaderCart = ({ isHeaderWhite }) => {
         if (closeTimeout.current) clearTimeout(closeTimeout.current);
         closeTimeout.current = setTimeout(() => {
           dispatch({ type: "TOGGLE_CART", payload: false });
-        }, 10);
+        }, 3000);
     
       }
     };
