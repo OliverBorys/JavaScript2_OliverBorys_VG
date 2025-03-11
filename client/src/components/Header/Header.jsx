@@ -1,4 +1,3 @@
-
 import { useContext, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { HeaderContext } from "../../context/HeaderContext";
@@ -11,7 +10,8 @@ import HeaderSidebar from "./HeaderSidebar";
 const Header = () => {
   const { state, dispatch } = useContext(HeaderContext);
   const location = useLocation();
-  const isTransparentPage = location.pathname === "/" || location.pathname === "/about";
+  const isTransparentPage =
+    location.pathname === "/" || location.pathname === "/about";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,7 +22,11 @@ const Header = () => {
   }, [dispatch]);
 
   const isHeaderWhite =
-    isTransparentPage !== true || state.isScrolled || state.isHovered || state.isCartOpen || state.isSidebarOpen;
+    isTransparentPage !== true ||
+    state.isScrolled ||
+    state.isHovered ||
+    state.isCartOpen ||
+    state.isSidebarOpen;
 
   return (
     <header
@@ -36,12 +40,26 @@ const Header = () => {
         <HeaderSidebar />
         <div className="absolute left-1/2 transform -translate-x-1/2">
           <Link to="/">
-            <img src={isHeaderWhite ? logoBlack : logoWhite} alt="Logo" className="h-10" />
+            <img
+              src={isHeaderWhite ? logoBlack : logoWhite}
+              alt="Logo"
+              className="h-10"
+            />
           </Link>
         </div>
         <div className="flex items-center space-x-4">
-        <HeaderLogin isHeaderWhite={isHeaderWhite} />
-        <HeaderCart isHeaderWhite={isHeaderWhite} />
+          <div className="search-container hidden lg:block">
+            <form action="/search" method="GET" className="search-input">
+              <input
+                type="text"
+                name="q"
+                placeholder="Search..."
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none text-black"
+              />
+            </form>
+          </div>
+          <HeaderLogin isHeaderWhite={isHeaderWhite} />
+          <HeaderCart isHeaderWhite={isHeaderWhite} />
         </div>
       </section>
     </header>
