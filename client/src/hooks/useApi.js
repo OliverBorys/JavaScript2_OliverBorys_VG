@@ -5,8 +5,8 @@ const initialState = {
   loading: false,
   error: null,
   categories: [],
-  deleteProductId: null,
   isModalOpen: false,
+  deleteProductId: null,
 };
 
 const apiReducer = (state, action) => {
@@ -35,68 +35,86 @@ const apiReducer = (state, action) => {
 };
 
 const useApi = (config) => {
-    const [state, dispatch] = useReducer(apiReducer, initialState);
-    const { url, method = "GET", body = null, dependencies = [], withCategories = false } = config;
-  
-    const bodyString = body ? JSON.stringify(body) : null;
-  
-    const fetchData = useCallback(async () => {
-      if (!url) {
-        dispatch({ type: "FETCH_SUCCESS", payload: null });
-        return;
+  const [state, dispatch] = useReducer(apiReducer, initialState);
+  const {
+    url,
+    method = "GET",
+    body = null,
+    dependencies = [],
+    withCategories = false,
+  } = config;
+
+  const bodyString = body ? JSON.stringify(body) : null;
+
+  const fetchData = useCallback(async () => {
+    if (!url) {
+      dispatch({ type: "FETCH_SUCCESS", payload: null });
+      return;
+    }
+
+    dispatch({ type: "FETCH_START" });
+
+    try {
+      const options = {
+        method,
+        headers: { "Content-Type": "application/json" },
+      };
+      if (bodyString) options.body = bodyString;
+
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error(
+          response.status === 404
+            ? "Resource not found"
+            : "Failed to fetch data"
+        );
       }
-  
-      dispatch({ type: "FETCH_START" });
-  
-      try {
-        const options = {
-          method,
-          headers: { "Content-Type": "application/json" },
-        };
-        if (bodyString) options.body = bodyString;
-  
-        const response = await fetch(url, options);
-        if (!response.ok) {
-          throw new Error(response.status === 404 ? "Resource not found" : "Failed to fetch data");
+
+      const result = await response.json();
+      dispatch({ type: "FETCH_SUCCESS", payload: result });
+
+      if (withCategories) {
+        const categoriesResponse = await fetch(
+          "http://localhost:5000/api/categories"
+        );
+        if (categoriesResponse.ok) {
+          const categories = await categoriesResponse.json();
+          dispatch({ type: "FETCH_CATEGORIES", payload: categories });
         }
-  
-        const result = await response.json();
-        dispatch({ type: "FETCH_SUCCESS", payload: result });
-  
-        if (withCategories) {
-          const categoriesResponse = await fetch("http://localhost:5000/api/categories");
-          if (categoriesResponse.ok) {
-            const categories = await categoriesResponse.json();
-            dispatch({ type: "FETCH_CATEGORIES", payload: categories });
-          }
-        }
-      } catch (err) {
-        dispatch({ type: "FETCH_ERROR", payload: err.message });
       }
-    }, [url, method, bodyString, withCategories]);
-  
-    const deleteItem = useCallback(async (id) => {
+    } catch (err) {
+      dispatch({ type: "FETCH_ERROR", payload: err.message });
+    }
+  }, [url, method, bodyString, withCategories]);
+
+  const deleteItem = useCallback(
+    async (id) => {
       try {
         const response = await fetch(`${url}/${id}`, { method: "DELETE" });
         if (!response.ok) throw new Error("Failed to delete");
         dispatch({ type: "DELETE_PRODUCT_SUCCESS", payload: id });
+        dispatch({ type: "CLOSE_DELETE_MODAL" });
       } catch (err) {
         dispatch({ type: "FETCH_ERROR", payload: err.message });
       }
-    }, [url]);
-  
-    useEffect(() => {
-      fetchData();
-    }, [fetchData, ...dependencies]);
-  
-    return {
-      data: state.data,
-      loading: state.loading,
-      error: state.error,
-      categories: state.categories,
-      deleteItem,
-      dispatch,
-    };
+    },
+    [url]
+  );
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData, ...dependencies]);
+
+  return {
+    data: state.data,
+    loading: state.loading,
+    error: state.error,
+    categories: state.categories,
+    isModalOpen: state.isModalOpen,
+    deleteProductId: state.deleteProductId, 
+    deleteItem,
+    dispatch,
   };
-  
-  export default useApi;
+};
+
+export default useApi;
