@@ -10,7 +10,8 @@ const ProductImage = ({ product }) => {
   const images = [product.image, product.secondaryImage1, product.secondaryImage2, product.secondaryImage3].filter(Boolean);
 
   return (
-    <section className="w-full max-w-2xl mx-auto">
+    <section>
+    <div className="lg:hidden w-full max-w-2xl mx-auto">
       <Swiper modules={[Pagination]} pagination={{ clickable: true }} spaceBetween={10} slidesPerView={1}>
         {images.map((img, index) => (
           <SwiperSlide key={index} className="flex justify-center">
@@ -18,6 +19,18 @@ const ProductImage = ({ product }) => {
           </SwiperSlide>
         ))}
       </Swiper>
+    </div>
+    <div className="hidden lg:grid grid-cols-2 gap-4 lg:mb-6">
+        {images.map((img, index) => (
+          <div key={index} className="flex justify-center items-center w-full h-auto">
+            <img
+              src={img}
+              alt={`Product ${index + 1}`}
+              className="w-full max-h-full object-contain"
+            />
+          </div>
+        ))}
+      </div>
     </section>
   );
 };
