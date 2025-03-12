@@ -83,7 +83,7 @@ const HeaderCart = ({ isHeaderWhite }) => {
       {state.isCartOpen && (
         <div
           ref={cartRef}
-          className="fixed top-14 right-0 h-full w-full sm:w-3/5 bg-white shadow-lg transform transition-transform duration-300 z-40 flex flex-col"
+          className="fixed top-14 lg:top-16 right-0 h-full w-full sm:w-3/5 bg-white shadow-lg transform transition-transform duration-300 z-40 flex flex-col"
         >
           <div className="p-4 flex-1 overflow-y-auto max-h-[80vh]">
             <h2 className="text-2xl font-bold">Your Cart</h2>
