@@ -7,6 +7,12 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+node_modules/
+dist/
+build/
+.cache/
+.env
+.DS_Store
 node_modules
 dist
 dist-ssr
