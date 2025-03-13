@@ -58,7 +58,14 @@ const Header = () => {
               />
             </form>
           </div>
-          <HeaderLogin isHeaderWhite={isHeaderWhite} />
+          {state.isLoggedIn ? (
+            <div className="flex space-x-2">
+            <p className="hidden sm:flex"> Welcome {state.user.username}</p>
+            <HeaderLogin isHeaderWhite={isHeaderWhite} />
+            </div>
+          ) : (
+            <HeaderLogin isHeaderWhite={isHeaderWhite} />
+          )}
           <HeaderCart isHeaderWhite={isHeaderWhite} />
         </div>
       </section>

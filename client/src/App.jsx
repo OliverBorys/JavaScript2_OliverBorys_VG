@@ -13,13 +13,13 @@ import AdminPage from "./pages/AdminPage/AdminPage";
 import AdminAddProductPage from "./pages/AdminPage/AdminAddProductPage";
 import AdminEditProductPage from "./pages/AdminPage/AdminEditProductPage";
 import "./index.css";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <div className="flex flex-col min-h-screen">
       <HeaderProvider>
       <Header />
-      </HeaderProvider>
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -29,15 +29,14 @@ function App() {
           <Route path="/products/:id" element={<ProductDetailsPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="/admin/add-product" element={<AdminAddProductPage />} />
-          <Route
-            path="/admin/edit-product/:id"
-            element={<AdminEditProductPage />}
-          />
-        </Routes>
+        
+          <Route path="/admin" element={<ProtectedRoute element={<AdminPage />} />} />
+            <Route path="/admin/add-product" element={<ProtectedRoute element={<AdminAddProductPage />} />} />
+            <Route path="/admin/edit-product/:id" element={<ProtectedRoute element={<AdminEditProductPage />} />} />
+          </Routes>
       </main>
       <Footer />
+      </HeaderProvider>
     </div>
   );
 }

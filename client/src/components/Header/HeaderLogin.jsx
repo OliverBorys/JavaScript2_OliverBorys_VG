@@ -8,6 +8,7 @@ const HeaderLogin = ({ isHeaderWhite }) => {
   const { state, dispatch } = useContext(HeaderContext);
   const [isLoginPopupOpen, setLoginPopupOpen] = useState(false);
   const loginPopupRef = useRef(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -25,13 +26,34 @@ const HeaderLogin = ({ isHeaderWhite }) => {
 
   const toggleLoginPopup = () => setLoginPopupOpen(!isLoginPopupOpen);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    dispatch({ type: "SET_LOGGED_IN", payload: true });
-    setLoginPopupOpen(false);
+    const username = e.target.username.value;
+    const password = e.target.password.value;
+
+    try {
+      const response = await fetch("http://localhost:5000/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+
+      dispatch({ type: "SET_LOGGED_IN", payload: data.user });
+      setLoginPopupOpen(false);
+    } catch (error) {
+      setError(error.message);
+    }
   };
-  const handleLogout = () =>
-    dispatch({ type: "SET_LOGGED_IN", payload: false });
+
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+  };
 
   return (
     <section>
@@ -66,7 +88,11 @@ const HeaderLogin = ({ isHeaderWhite }) => {
                 <h2 className="text-2xl text-gray-900 font-semibold mb-4">
                   Please enter your login details below
                 </h2>
-                <form onSubmit={handleLogin} className="flex flex-col text-left">
+                {error && <p className="text-red-500">{error}</p>}
+                <form
+                  onSubmit={handleLogin}
+                  className="flex flex-col text-left"
+                >
                   <label className="text-lg text-gray-900" htmlFor="username">
                     Username:
                   </label>
@@ -105,7 +131,7 @@ const HeaderLogin = ({ isHeaderWhite }) => {
             ) : (
               <>
                 <h2 className="text-2xl font-semibold mb-4">
-                  You’re already signed in
+                  You’re logged in as {state.user.username}
                 </h2>{" "}
                 <button
                   onClick={handleLogout}
