@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Navigate } from "react-router-dom";
-import { HeaderContext } from "../context/HeaderContext";
+import { HeaderContext } from "./HeaderContext";
 import PropTypes from "prop-types";
 
 const ProtectedRoute = ({ element }) => {

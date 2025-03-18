@@ -13,7 +13,7 @@ import AdminPage from "./pages/AdminPage/AdminPage";
 import AdminAddProductPage from "./pages/AdminPage/AdminAddProductPage";
 import AdminEditProductPage from "./pages/AdminPage/AdminEditProductPage";
 import "./index.css";
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./context/ProtectedRoute";
 
 function App() {
   return (
