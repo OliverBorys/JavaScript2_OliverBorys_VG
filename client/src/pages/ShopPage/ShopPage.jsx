@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import useApi from "../../hooks/useApi";
 import { filterProducts, sortProducts } from "../../utils/FilterAndSort";
@@ -15,8 +15,14 @@ const ShopPage = () => {
 
   const { data: products, categories } = useApi({
     url: "http://localhost:5000/api/products",
-    withCategories: true
+    withCategories: true,
   });
+
+  useEffect(() => {
+    document.title = selectedCategory 
+      ? `Shop: ${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)}` 
+      : "Shop: All";
+  }, [selectedCategory]);
 
   const handleCategoryChange = (category) => {
     setSearchParams((prevParams) => {
@@ -32,11 +38,14 @@ const ShopPage = () => {
 
   const handleSortChange = (value) => setSort(value);
 
-  const filteredProducts = filterProducts(products || [], query, selectedCategory);
+  const filteredProducts = filterProducts(
+    products || [],
+    query,
+    selectedCategory
+  );
   const sortedProducts = sortProducts(filteredProducts, sort);
 
-  const handleLikeToggle = () => {
-  };
+  const handleLikeToggle = () => {};
 
   return (
     <main className="py-10 flex-grow">
@@ -46,21 +55,18 @@ const ShopPage = () => {
         </h1>
 
         <div className="flex flex-row gap-4 mb-4 sm:flex-col">
-          <CategoryFilter 
-            categories={categories || []} 
-            selectedCategory={selectedCategory} 
-            handleCategoryChange={handleCategoryChange} 
+          <CategoryFilter
+            categories={categories || []}
+            selectedCategory={selectedCategory}
+            handleCategoryChange={handleCategoryChange}
           />
-          <SortDropdown 
-            sort={sort} 
-            handleSortChange={handleSortChange} 
-          />
+          <SortDropdown sort={sort} handleSortChange={handleSortChange} />
         </div>
 
         {sortedProducts.length > 0 ? (
-          <ProductGrid 
-            products={sortedProducts} 
-            onLikeToggle={handleLikeToggle} 
+          <ProductGrid
+            products={sortedProducts}
+            onLikeToggle={handleLikeToggle}
           />
         ) : (
           <NoProductsFound message={`No products found for "${query}"`} />

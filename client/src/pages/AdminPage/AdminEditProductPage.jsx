@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useProductForm from "../../hooks/useProductForm";
 import FormInput from "../../components/Admin/AddProduct/FormInput";
@@ -25,6 +26,10 @@ const AdminEditProductPage = () => {
     "PUT",
     id
   );
+
+  useEffect(() => {
+    document.title = "Admin: Edit product";
+  }, []);
 
   return (
     <section>

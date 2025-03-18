@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { HeaderContext } from "../../context/HeaderContext";
 import logoWhite from "/images/logo-white.svg";
 import logoBlack from "/images/logo.svg";
@@ -10,6 +10,7 @@ import HeaderSidebar from "./HeaderSidebar";
 const Header = () => {
   const { state, dispatch } = useContext(HeaderContext);
   const location = useLocation();
+  const navigate = useNavigate();
   const isTransparentPage =
     location.pathname === "/" || location.pathname === "/about";
 
@@ -27,6 +28,15 @@ const Header = () => {
     state.isHovered ||
     state.isCartOpen ||
     state.isSidebarOpen;
+
+    const handleSearchSubmit = (event) => {
+      event.preventDefault();
+      const searchQuery = event.target.q.value.trim();
+      if (searchQuery) {
+        navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+        event.target.q.value = "";
+      }
+    };
 
   return (
     <header
@@ -49,7 +59,7 @@ const Header = () => {
         </div>
         <div className="flex items-center space-x-4">
           <div className="search-container hidden lg:block">
-            <form action="/search" method="GET" className="search-input">
+            <form onSubmit={handleSearchSubmit} className="search-input">
               <input
                 type="text"
                 name="q"

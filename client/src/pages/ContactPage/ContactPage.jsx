@@ -5,9 +5,11 @@ import ShippingTable from "../../components/Contact/ShippingTable";
 import PurchaseInformationTable from "../../components/Contact/PurchaseInformationTable";
 
 const ContactPage = () => {
+
   useEffect(() => {
     document.title = "Contact";
   }, []);
+  
   return (
     <main className="mt-20 lg:mt-24">
       <h1 className="text-center my-8 text-2xl font-medium text-gray-800">

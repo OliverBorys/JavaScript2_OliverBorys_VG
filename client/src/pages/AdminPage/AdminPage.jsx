@@ -5,6 +5,7 @@ import HeroImageForm from "../../components/Admin/AdminPage/HeroImageForm";
 import AdminUserSection from "../../components/Admin/AdminPage/AdminUserSection";
 
 const AdminPage = () => {
+
   useEffect(() => {
     document.title = "Administration";
   }, []);

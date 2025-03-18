@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useApi from "../../hooks/useApi";
 import ProductImage from "../../components/Shop/ProductDetails/ProductImage";
@@ -14,6 +15,12 @@ const ProductDetailsPage = () => {
   } = useApi({
     url: id ? `http://localhost:5000/api/products/${id}` : null,
   });
+
+  useEffect(() => {
+    if (product?.productName) {
+      document.title = product.productName;
+    }
+  }, [product]);
 
   if (loading) return <p className="text-center text-gray-500">Loading...</p>;
   if (error) return <MissingProduct />;

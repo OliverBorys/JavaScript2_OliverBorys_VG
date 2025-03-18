@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import useProductForm from "../../hooks/useProductForm";
 import FormInput from "../../components/Admin/AddProduct/FormInput";
 import FormTextarea from "../../components/Admin/AddProduct/FormTextarea";
@@ -22,6 +23,10 @@ const AdminAddProductPage = () => {
     "http://localhost:5000/api/products",
     "POST"
   );
+
+    useEffect(() => {
+      document.title = "Admin: Add product";
+    }, []);
 
   return (
     <section>

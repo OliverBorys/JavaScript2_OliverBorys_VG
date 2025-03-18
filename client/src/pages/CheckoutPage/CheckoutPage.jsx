@@ -1,8 +1,14 @@
+import { useEffect } from "react";
 import PaymentForm from "../../components/Checkout/PaymentForm";
 import PayPurchaseButton from "../../components/Checkout/PayPurchaseButton";
 import ProductGrid from "../../components/Checkout/ProductGrid";
 
 const CheckoutPage = () => {
+
+  useEffect(() => {
+    document.title = "Checkout";
+  }, []);
+
   return (
     <div className="checkout-container">
       <h1 className="text-center text-2xl mt-20 lg:mt-24 mb-6 font-medium">

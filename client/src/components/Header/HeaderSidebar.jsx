@@ -1,9 +1,10 @@
 import { useContext, useEffect, useRef } from "react";
 import { HeaderContext } from "../../context/HeaderContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const HeaderSidebar = () => {
   const { state, dispatch } = useContext(HeaderContext);
+  const navigate = useNavigate();
   const sidebarRef = useRef(null);
 
   useEffect(() => {
@@ -24,6 +25,15 @@ const HeaderSidebar = () => {
     }
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [state.isSidebarOpen, dispatch]);
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    const searchQuery = event.target.q.value.trim();
+    if (searchQuery) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+      event.target.q.value = "";
+    }
+  };
 
   return (
     <section>
@@ -86,7 +96,7 @@ const HeaderSidebar = () => {
           <ul className="mt-4 space-y-4 px-4">
             <li>
               <div className="search-container">
-                <form action="/search" method="GET" className="search-input">
+                <form onSubmit={handleSearchSubmit} className="search-input">
                   <input
                     type="text"
                     name="q"
