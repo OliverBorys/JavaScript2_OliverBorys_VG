@@ -97,7 +97,7 @@ const Footer = () => {
         </div>
 
         <p className="mt-8 text-sm text-center text-[#3b0001]">
-          © {new Date().getFullYear()} Grupptre AB. All rights reserved.
+          © {new Date().getFullYear()} Cache Closet AB. All rights reserved.
         </p>
       </div>
     </footer>
